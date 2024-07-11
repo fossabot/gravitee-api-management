@@ -858,7 +858,7 @@ const apisRoutes: Routes = [
             data: {
               docs: null,
               permissions: {
-                anyOf: ['api-documentation-c'],
+                anyOf: ['api-documentation-c', 'api-documentation-u', 'api-documentation-r'],
               },
             },
             component: ApiDocumentationV4EditPageComponent,
