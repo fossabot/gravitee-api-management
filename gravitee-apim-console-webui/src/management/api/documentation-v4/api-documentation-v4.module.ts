@@ -54,6 +54,9 @@ import { ApiDocumentationV4PageTitleComponent } from './components/api-documenta
 import { ApiDocumentationV4BreadcrumbComponent } from './components/api-documentation-v4-breadcrumb/api-documentation-v4-breadcrumb.component';
 import { ApiDocumentationV4FileUploadComponent } from './components/api-documentation-v4-file-upload/api-documentation-v4-file-upload.component';
 import { ApiDocumentationV4MetadataComponent } from './documentation-metadata/api-documentation-v4-metadata.component';
+import { ApiDocumentationV4HomePageComponent } from './documentation-home-page/api-documentation-v4-home-page.component';
+import { ApiDocumentationV4HomePageHeaderComponent } from './components/documentation-home-page-header/api-documentation-v4-home-page-header.component';
+import { ApiDocumentationV4HomePageElementComponent } from './documentation-home-page-element/api-documentation-v4-home-page-element.component';
 
 import { GioPermissionModule } from '../../../shared/components/gio-permission/gio-permission.module';
 import { GioTooltipOnEllipsisModule } from '../../../shared/components/gio-tooltip-on-ellipsis/gio-tooltip-on-ellipsis.module';
@@ -67,13 +70,16 @@ import { GioApiMetadataListModule } from '../component/gio-api-metadata-list/gio
     ApiDocumentationV4Component,
     ApiDocumentationV4EmptyStateComponent,
     ApiDocumentationV4ListNavigationHeaderComponent,
+    ApiDocumentationV4HomePageHeaderComponent,
     ApiDocumentationV4VisibilityComponent,
     ApiDocumentationV4ContentEditorComponent,
     ApiDocumentationV4PageTitleComponent,
     ApiDocumentationV4BreadcrumbComponent,
     ApiDocumentationV4EditFolderDialog,
     ApiDocumentationV4EditPageComponent,
+    ApiDocumentationV4HomePageComponent,
     ApiDocumentationV4PagesListComponent,
+    ApiDocumentationV4HomePageElementComponent,
     ApiDocumentationV4BreadcrumbComponent,
     ApiDocumentationV4FileUploadComponent,
     ApiDocumentationV4MetadataComponent,

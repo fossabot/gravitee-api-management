@@ -84,6 +84,7 @@ import { ApiHistoryV4Component } from './history-v4/api-history-v4.component';
 import { ApiFailoverV4Component } from './failover-v4/api-failover-v4.component';
 import { ApiImportV4Component } from './import-v4/api-import-v4.component';
 import { ApiAnalyticsComponent } from './api-traffic-v4/analytics/api-analytics.component';
+import { ApiDocumentationV4HomePageComponent } from './documentation-v4/documentation-home-page/api-documentation-v4-home-page.component';
 
 import { DocumentationManagementComponent } from '../../components/documentation/documentation-management.component';
 import { DocumentationNewPageComponent } from '../../components/documentation/new-page.component';
@@ -871,6 +872,16 @@ const apisRoutes: Routes = [
               },
             },
             component: ApiDocumentationV4MetadataComponent,
+          },
+          {
+            path: 'home-pages',
+            data: {
+              docs: null,
+              permissions: {
+                anyOf: ['api-documentation-u'],
+              },
+            },
+            component: ApiDocumentationV4HomePageComponent,
           },
         ],
       },
