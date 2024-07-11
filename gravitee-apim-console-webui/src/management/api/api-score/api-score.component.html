@@ -1,0 +1,51 @@
+<mat-card class="mat-card">
+  <mat-card-header class="card-header">
+    <mat-card-title>
+      QuantumService API
+      <span class="gio-badge-success"><mat-icon class="gio-left" svgIcon="gio:shield-check"></mat-icon>90%</span>
+      <span class="gio-badge-success"><mat-icon class="gio-left" svgIcon="gio:trending-up"></mat-icon>+0.7</span>
+    </mat-card-title>
+    <mat-card-subtitle>Last evaluated 1 minute ago.</mat-card-subtitle>
+
+    <div class="card-header__actions">
+      <button
+        mat-raised-button
+        color="primary"
+        data-testid="discover-button"
+        (click)="evaluate()"
+      >
+        Evaluate
+      </button>
+    </div>
+  </mat-card-header>
+
+  <div class="separator-hr"></div>
+
+  <mat-card-content>
+    <section>
+      <mat-button-toggle-group
+        class="gio-button-toggle-group"
+        name="status"
+        aria-label=""
+        [value]="status"
+      >
+        <mat-button-toggle value="all">All (12)</mat-button-toggle>
+        <mat-button-toggle value="errors">Errors (0)</mat-button-toggle>
+        <mat-button-toggle value="warnings">Warnings (12)</mat-button-toggle>
+        <mat-button-toggle value="infos">Infos (0)</mat-button-toggle>
+        <mat-button-toggle value="hints">Hints (0)</mat-button-toggle>
+
+      </mat-button-toggle-group>
+    </section>
+
+    <section class="api-scores-lists">
+      @for (apiScoreItem of apiScores; track apiScoreItem.name) {
+        <app-api-score-list
+          [apiScore]="apiScoreItem"
+        ></app-api-score-list>
+      }
+    </section>
+
+  </mat-card-content>
+
+</mat-card>

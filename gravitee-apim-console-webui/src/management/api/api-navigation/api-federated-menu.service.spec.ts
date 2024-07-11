@@ -81,6 +81,15 @@ describe('ApiFederatedMenuService', () => {
             ],
           },
           {
+            displayName: 'API Score',
+            icon: 'shield-check',
+            routerLink: 'api-score',
+            header: {
+              title: 'API Score',
+            },
+            tabs: [],
+          },
+          {
             displayName: 'Consumers',
             header: {
               subtitle: 'Manage how your API is consumed',
@@ -148,6 +157,15 @@ describe('ApiFederatedMenuService', () => {
                 },
               },
             ],
+          },
+          {
+            displayName: 'API Score',
+            icon: 'shield-check',
+            routerLink: 'api-score',
+            header: {
+              title: 'API Score',
+            },
+            tabs: [],
           },
           {
             displayName: 'Consumers',
