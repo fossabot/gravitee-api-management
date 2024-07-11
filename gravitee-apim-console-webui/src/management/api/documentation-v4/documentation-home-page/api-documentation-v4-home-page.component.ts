@@ -24,7 +24,7 @@ import { ApiDocumentationV2Service } from '../../../../services-ngx/api-document
 import { SnackBarService } from '../../../../services-ngx/snack-bar.service';
 import { ApiV2Service } from '../../../../services-ngx/api-v2.service';
 import { Api, Breadcrumb, Page } from '../../../../entities/management-api-v2';
-import { HomePageType } from '../../../../entities/management-api-v2/documentation/homePageType';
+import {PageType} from "../../../../entities/page";
 
 @Component({
   selector: 'api-documentation-home-page',
@@ -78,10 +78,10 @@ export class ApiDocumentationV4HomePageComponent implements OnInit, OnDestroy {
     this.unsubscribe$.unsubscribe();
   }
 
-  addPage(homePageType: HomePageType) {
+  addPage(pageType: PageType) {
     this.router.navigate(['new'], {
       relativeTo: this.activatedRoute,
-      queryParams: { parentId: this.parentId, homePageType: homePageType },
+      queryParams: { parentId: this.parentId, pageType },
     });
   }
 

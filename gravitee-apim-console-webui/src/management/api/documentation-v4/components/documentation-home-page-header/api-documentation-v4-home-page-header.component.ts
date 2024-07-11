@@ -15,9 +15,7 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-
-import { Breadcrumb } from '../../../../../entities/management-api-v2';
-import { getTitleForHomePageType, HomePageType } from '../../../../../entities/management-api-v2/documentation/homePageType';
+import {getLogoForPageType, PageType, getTitleForPageType, Breadcrumb} from '../../../../../entities/management-api-v2';
 
 @Component({
   selector: 'api-documentation-home-page-header',
@@ -32,11 +30,11 @@ export class ApiDocumentationV4HomePageHeaderComponent {
   @Input()
   hasPages: boolean;
   @Output()
-  onAddPage = new EventEmitter<HomePageType>();
+  onAddPage = new EventEmitter<PageType>();
   @Output()
   onNavigateTo = new EventEmitter<string>();
 
-  // expose constants
-  readonly getTitleForHomePageType = getTitleForHomePageType;
-  homePageTypes: HomePageType[] = ['CREATE_NEW_PAGE', 'CHOOSE_EXISTING_PAGE'];
+  readonly getLogoForPageType = getLogoForPageType;
+  readonly getTitleForPageType = getTitleForPageType;
+  pageTypes: PageType[] = ['MARKDOWN', 'SWAGGER', 'ASYNCAPI'];
 }

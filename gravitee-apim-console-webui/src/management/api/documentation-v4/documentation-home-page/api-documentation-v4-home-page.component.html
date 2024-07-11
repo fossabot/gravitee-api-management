@@ -33,10 +33,10 @@
     (onDeletePage)="deletePage($event)"
   ></api-documentation-v4-home-page-element>
   <ng-template #emptyState>
-    <api-documentation-home-page-header
+    <api-documentation-empty-state
       *ngIf="!isLoading"
       [isReadOnly]="isReadOnly"
       (onAddPage)="addPage($event)"
-    ></api-documentation-home-page-header>
+    ></api-documentation-empty-state>
   </ng-template>
 </mat-card>

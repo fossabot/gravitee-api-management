@@ -29,8 +29,9 @@
       Add home page
     </button>
     <mat-menu #menu="matMenu">
-      <button *ngFor="let homePageType of homePageTypes" (click)="onAddPage.emit(homePageType)" mat-menu-item>
-        {{ getTitleForHomePageType(homePageType) }}
+      <button *ngFor="let pageType of pageTypes" (click)="onAddPage.emit(pageType)" mat-menu-item>
+        {{ getTitleForPageType(pageType) }}
+        <img [ngSrc]="getLogoForPageType(pageType)" height="24" width="24" [alt]="getTitleForPageType(pageType).toLowerCase() + ' logo'" />
       </button>
     </mat-menu>
   </div>
