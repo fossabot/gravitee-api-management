@@ -23,8 +23,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDocumentationV2Service } from '../../../../services-ngx/api-documentation-v2.service';
 import { SnackBarService } from '../../../../services-ngx/snack-bar.service';
 import { ApiV2Service } from '../../../../services-ngx/api-v2.service';
-import { Api, Breadcrumb, Page } from '../../../../entities/management-api-v2';
-import {PageType} from "../../../../entities/page";
+import { Api, Breadcrumb, Page, PageType } from '../../../../entities/management-api-v2';
 
 @Component({
   selector: 'api-documentation-home-page',

@@ -854,6 +854,16 @@ const apisRoutes: Routes = [
             component: ApiDocumentationV4EditPageComponent,
           },
           {
+            path: 'home-pages/new',
+            data: {
+              docs: null,
+              permissions: {
+                anyOf: ['api-documentation-c'],
+              },
+            },
+            component: ApiDocumentationV4EditPageComponent,
+          },
+          {
             path: 'pages/:pageId',
             data: {
               docs: null,

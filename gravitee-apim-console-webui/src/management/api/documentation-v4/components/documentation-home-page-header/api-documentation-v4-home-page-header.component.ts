@@ -15,7 +15,8 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {getLogoForPageType, PageType, getTitleForPageType, Breadcrumb} from '../../../../../entities/management-api-v2';
+
+import { getLogoForPageType, PageType, getTitleForPageType, Breadcrumb } from '../../../../../entities/management-api-v2';
 
 @Component({
   selector: 'api-documentation-home-page-header',
