@@ -26,7 +26,7 @@
       color="primary"
       [matMenuTriggerFor]="menu"
     >
-      Add home page
+      Create New Page
     </button>
     <mat-menu #menu="matMenu">
       <button *ngFor="let pageType of pageTypes" (click)="onAddPage.emit(pageType)" mat-menu-item>
@@ -34,5 +34,16 @@
         <img [ngSrc]="getLogoForPageType(pageType)" height="24" width="24" [alt]="getTitleForPageType(pageType).toLowerCase() + ' logo'" />
       </button>
     </mat-menu>
+  </div>
+  <div class="header__action" *gioPermission="{ anyOf: ['api-documentation-c'] }">
+    <button
+      *ngIf="hasPages"
+      [disabled]="isReadOnly"
+      class="header__action__button"
+      mat-flat-button
+      color="primary"
+    >
+      Choose Existing Page
+    </button>
   </div>
 </div>
