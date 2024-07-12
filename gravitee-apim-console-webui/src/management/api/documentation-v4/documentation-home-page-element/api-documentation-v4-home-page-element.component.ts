@@ -45,7 +45,6 @@ export class ApiDocumentationV4HomePageElementComponent implements OnInit, OnCha
 
   public displayedColumns = ['name', 'status', 'visibility', 'lastUpdated', 'actions'];
   public dataSource: MatTableDataSource<Page>;
-  public pagesIncludeNonFolders: boolean;
 
   ngOnInit(): void {}
 
