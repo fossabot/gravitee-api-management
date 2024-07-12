@@ -16,8 +16,11 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { SimpleChange } from '@angular/core';
 
 import { ApiDocumentationV4HomePageElementComponent } from './api-documentation-v4-home-page-element.component';
+
+import { Page, PageType } from '../../../../entities/page';
 
 describe('ApiDocumentationV4HomePageElementComponent', () => {
   let component: ApiDocumentationV4HomePageElementComponent;
@@ -36,6 +39,41 @@ describe('ApiDocumentationV4HomePageElementComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('initializes with correct default values', () => {
+    const newPage: Page = { id: 'newPageId', name: 'New Page' };
+    component.dataSource = new MatTableDataSource([newPage]);
+    expect(component.dataSource).toBeInstanceOf(MatTableDataSource);
+    expect(component.displayedColumns).toEqual(['name', 'status', 'visibility', 'lastUpdated', 'actions']);
+  });
+
+  it('correctly identifies logos for page types', () => {
+    const pageTypes = [PageType.MARKDOWN, PageType.ASYNCAPI, PageType.SWAGGER];
+    pageTypes.forEach((type) => {
+      expect(component.getLogoForPageType(type)).toBeDefined();
+    });
+  });
+
+  it('provides correct metadata for page types', () => {
+    const pageTypes = [PageType.SWAGGER, PageType.ASYNCAPI, PageType.MARKDOWN];
+    const metadataFunctions = [component.getTooltipForPageType, component.getTitleForPageType];
+
+    pageTypes.forEach((type) => {
+      metadataFunctions.forEach((func) => {
+        expect(func(type)).toBeDefined();
+      });
+    });
+  });
+
+  it('updates dataSource when page input changes', () => {
+    const newPage: Page = { id: 'newPageId', name: 'New Page' };
+    component.page = newPage;
+    component.dataSource = new MatTableDataSource([newPage]);
+    component.ngOnChanges({
+      page: new SimpleChange(null, newPage, true),
+    });
+    expect(component.dataSource.data).toContain(newPage);
   });
 
   it('does not update dataSource when ngOnChanges is called without pages changes', () => {
