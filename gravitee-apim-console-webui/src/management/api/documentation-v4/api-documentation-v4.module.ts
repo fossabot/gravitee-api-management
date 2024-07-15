@@ -48,7 +48,7 @@ import { ApiDocumentationV4Component } from './api-documentation-v4.component';
 import { ApiDocumentationV4EditFolderDialog } from './dialog/documentation-edit-folder-dialog/api-documentation-v4-edit-folder-dialog.component';
 import { ApiDocumentationV4EditPageComponent } from './documentation-edit-page/api-documentation-v4-edit-page.component';
 import { ApiDocumentationV4VisibilityComponent } from './components/api-documentation-v4-visibility/api-documentation-v4-visibility.component';
-import { ApiDocumentationV4PagesListComponent } from './documentation-pages-list/api-documentation-v4-pages-list.component';
+import { ApiDocumentationV4PagesListComponent } from './components/api-documentation-v4-pages-list/api-documentation-v4-pages-list.component';
 import { ApiDocumentationV4ContentEditorComponent } from './components/api-documentation-v4-content-editor/api-documentation-v4-content-editor.component';
 import { ApiDocumentationV4PageTitleComponent } from './components/api-documentation-v4-page-title/api-documentation-v4-page-title.component';
 import { ApiDocumentationV4BreadcrumbComponent } from './components/api-documentation-v4-breadcrumb/api-documentation-v4-breadcrumb.component';
@@ -57,6 +57,7 @@ import { ApiDocumentationV4MetadataComponent } from './documentation-metadata/ap
 import { ApiDocumentationV4HomePageComponent } from './documentation-home-page/api-documentation-v4-home-page.component';
 import { ApiDocumentationV4HomePageHeaderComponent } from './components/documentation-home-page-header/api-documentation-v4-home-page-header.component';
 import { ApiDocumentationV4HomePageElementComponent } from './documentation-home-page-element/api-documentation-v4-home-page-element.component';
+import { ApiDocumentationV4PageListComponent } from './components/api-documentation-v4-page-list-remove/api-documentation-v4-page-list.component';
 
 import { GioPermissionModule } from '../../../shared/components/gio-permission/gio-permission.module';
 import { GioTooltipOnEllipsisModule } from '../../../shared/components/gio-tooltip-on-ellipsis/gio-tooltip-on-ellipsis.module';
@@ -122,6 +123,7 @@ import { GioApiMetadataListModule } from '../component/gio-api-metadata-list/gio
     GioFormSlideToggleModule,
     MatSlideToggle,
     GioFormJsonSchemaModule,
+    ApiDocumentationV4PageListComponent,
   ],
 })
 export class ApiDocumentationV4Module {}

@@ -29,6 +29,9 @@ export class ApiDocumentationV4HomePageElementComponent implements OnInit, OnCha
   page: Page;
 
   @Input()
+  mode: 'HOME_PAGE' | 'PAGE_LIST' = 'HOME_PAGE';
+
+  @Input()
   isReadOnly: boolean;
 
   @Output()

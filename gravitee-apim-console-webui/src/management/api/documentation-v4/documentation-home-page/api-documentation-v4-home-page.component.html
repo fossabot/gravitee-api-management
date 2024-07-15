@@ -17,21 +17,20 @@
 -->
 <mat-card>
   <api-documentation-home-page-header
-    [breadcrumbs]="breadcrumbs || []"
     [isReadOnly]="isReadOnly"
     [hasPages]="page != null"
     (onAddPage)="addPage($event)"
-    (onNavigateTo)="navigateTo($event)"
   ></api-documentation-home-page-header>
-  <api-documentation-v4-home-page-element
+  <api-documentation-v4-pages-list
     *ngIf="page != null; else emptyState"
-    [page]="page"
+    mode="HOME_PAGE"
+    [pages]="[page]"
     [isReadOnly]="isReadOnly"
     (onEditPage)="editPage($event)"
     (onPublishPage)="publishPage($event)"
     (onUnpublishPage)="unpublishPage($event)"
     (onDeletePage)="deletePage($event)"
-  ></api-documentation-v4-home-page-element>
+  ></api-documentation-v4-pages-list>
   <ng-template #emptyState>
     <api-documentation-empty-state
       *ngIf="!isLoading"

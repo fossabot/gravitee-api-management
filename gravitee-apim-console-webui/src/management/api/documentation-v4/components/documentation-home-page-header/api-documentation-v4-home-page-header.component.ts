@@ -16,7 +16,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { getLogoForPageType, PageType, getTitleForPageType, Breadcrumb } from '../../../../../entities/management-api-v2';
+import { getLogoForPageType, PageType, getTitleForPageType } from '../../../../../entities/management-api-v2';
 
 @Component({
   selector: 'api-documentation-home-page-header',
@@ -25,15 +25,13 @@ import { getLogoForPageType, PageType, getTitleForPageType, Breadcrumb } from '.
 })
 export class ApiDocumentationV4HomePageHeaderComponent {
   @Input()
-  breadcrumbs: Breadcrumb[];
-  @Input()
   isReadOnly: boolean;
   @Input()
   hasPages: boolean;
   @Output()
   onAddPage = new EventEmitter<PageType>();
   @Output()
-  onNavigateTo = new EventEmitter<string>();
+  onChoosePage = new EventEmitter<string>();
 
   readonly getLogoForPageType = getLogoForPageType;
   readonly getTitleForPageType = getTitleForPageType;

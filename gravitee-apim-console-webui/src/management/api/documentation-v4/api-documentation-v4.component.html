@@ -27,6 +27,7 @@
   ></api-documentation-list-navigation-header>
   <api-documentation-v4-pages-list
     *ngIf="pages && pages.length > 0; else emptyState"
+    mode="PAGE_LIST"
     [pages]="pages"
     [isReadOnly]="isReadOnly"
     (onGoToFolder)="navigateTo($event)"

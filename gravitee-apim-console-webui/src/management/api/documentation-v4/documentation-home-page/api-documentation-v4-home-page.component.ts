@@ -84,13 +84,6 @@ export class ApiDocumentationV4HomePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  navigateTo(folderId: string | null) {
-    this.router.navigate(['.'], {
-      relativeTo: this.activatedRoute,
-      queryParams: { parentId: folderId || 'ROOT' },
-    });
-  }
-
   editPage(pageId: string) {
     this.router.navigate([pageId], {
       relativeTo: this.activatedRoute,
