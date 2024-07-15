@@ -41,6 +41,7 @@
   ></api-documentation-v4-pages-list>
   <ng-template #emptyState>
     <api-documentation-empty-state
+      mode="CUSTOM_PAGES"
       *ngIf="!isLoading"
       [isReadOnly]="isReadOnly"
       (onAddPage)="addPage($event)"

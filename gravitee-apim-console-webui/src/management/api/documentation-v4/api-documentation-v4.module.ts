@@ -15,7 +15,7 @@
  */
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, NgForOf, NgOptimizedImage } from '@angular/common';
 import {
   GioFormFilePickerModule,
   GioFormJsonSchemaModule,
@@ -24,7 +24,7 @@ import {
   GioIconsModule,
   GioMonacoEditorModule,
 } from '@gravitee/ui-particles-angular';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -36,8 +36,8 @@ import { MarkdownModule } from 'ngx-markdown';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
+import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatOption } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -121,7 +121,15 @@ import { GioApiMetadataListModule } from '../component/gio-api-metadata-list/gio
     MatSelect,
     GioFormSlideToggleModule,
     MatSlideToggle,
-    GioFormJsonSchemaModule
+    GioFormJsonSchemaModule,
+    MatButton,
+    MatIcon,
+    MatMenu,
+    MatMenuItem,
+    NgForOf,
+    NgForOf,
+    NgOptimizedImage,
+    NgOptimizedImage,
   ],
 })
 export class ApiDocumentationV4Module {}

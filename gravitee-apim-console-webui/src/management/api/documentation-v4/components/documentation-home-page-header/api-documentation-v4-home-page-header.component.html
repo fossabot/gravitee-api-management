@@ -18,9 +18,7 @@
 <div class="header">
   <div class="header__action" *gioPermission="{ anyOf: ['api-documentation-c'] }">
     @if (!hasPages) {
-    <button [disabled]="isReadOnly" class="header__action__button"  mat-stroked-button>
-      Choose Existing Page
-    </button>
+      <button [disabled]="isReadOnly" class="header__action__button" mat-stroked-button>Choose Existing Page</button>
       <button [disabled]="isReadOnly" class="header__action__button" mat-flat-button color="primary" [matMenuTriggerFor]="menu">
         Create New Page
       </button>

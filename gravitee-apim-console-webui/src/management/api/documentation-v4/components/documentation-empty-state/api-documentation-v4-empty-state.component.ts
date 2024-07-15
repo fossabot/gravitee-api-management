@@ -33,6 +33,25 @@ export class ApiDocumentationV4EmptyStateComponent implements OnDestroy {
   @Input()
   public isReadOnly = false;
 
+  @Input()
+  mode: 'DEFAULT_PAGES' | 'CUSTOM_PAGES' = 'CUSTOM_PAGES';
+
+  getEmptyPageTitle() {
+    if (this.mode === 'CUSTOM_PAGES') {
+      return 'No pages available yet';
+    } else {
+      return 'No home pages set';
+    }
+  }
+
+  getEmptyPageMessage() {
+    if (this.mode === 'CUSTOM_PAGES') {
+      return 'Start creating pages to fill up your folder.';
+    } else {
+      return 'You have not set up a home page yet.';
+    }
+  }
+
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.unsubscribe();
