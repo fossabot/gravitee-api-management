@@ -7,7 +7,7 @@ $typography: map.get(gio.$mat-theme, typography);
   border-bottom: 2px solid mat.get-color-from-palette(gio.$mat-dove-palette, 'darker10');
   padding: 12px 24px;
   display: flex;
-  justify-content: space-between; /* Adjusted for alignment */
+  justify-content: space-between;
   align-items: center;
   min-height: 54px;
 }
@@ -20,7 +20,10 @@ $typography: map.get(gio.$mat-theme, typography);
 }
 
 .header__title {
-  /* New class for the "Homepage" div */
-  font-size: 1.25rem; /* Example size, adjust as needed */
-  color: #000; /* Example color, adjust as needed */
+  @include mat.typography-level($typography, 'subtitle-2');
+  color: mat.get-color-from-palette(gio.$mat-space-palette, 'default');
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

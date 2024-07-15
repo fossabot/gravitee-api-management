@@ -40,7 +40,7 @@ export class ApiDocumentationV4EmptyStateComponent implements OnDestroy {
     if (this.mode === 'CUSTOM_PAGES') {
       return 'No pages available yet';
     } else {
-      return 'No home page set';
+      return 'No homepage set';
     }
   }
 
@@ -48,7 +48,7 @@ export class ApiDocumentationV4EmptyStateComponent implements OnDestroy {
     if (this.mode === 'CUSTOM_PAGES') {
       return 'Start creating pages to fill up your folder.';
     } else {
-      return 'You have not set up a home page yet.';
+      return 'You have not set up a homepage yet.';
     }
   }
 
