@@ -35,7 +35,7 @@ import { CONSTANTS_TESTING, GioTestingModule } from '../../../../shared/testing'
 import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
 import { ApiLifecycleState, Breadcrumb, fakeApiV4, Page } from '../../../../entities/management-api-v2';
 
-describe('ApiDocumentationV4HomePageComponent', () => {
+describe('ApiDocumentationV4DefaultPageComponent', () => {
   let fixture: ComponentFixture<ApiDocumentationV4DefaultPageComponent>;
   let harnessLoader: HarnessLoader;
   const API_ID = 'api-id';
