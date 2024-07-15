@@ -23,7 +23,7 @@
       Create New Page
     </button>
     <mat-menu #menu="matMenu">
-      <button *ngFor="let pageType of pageTypes" (click)="onAddPage.emit(pageType)" mat-menu-item>
+      <button *ngFor="let pageType of pageTypes" (click)="addPage.emit(pageType)" mat-menu-item>
         {{ getTitleForPageType(pageType) }}
         <img [ngSrc]="getLogoForPageType(pageType)" height="24" width="24" [alt]="getTitleForPageType(pageType).toLowerCase() + ' logo'" />
       </button>

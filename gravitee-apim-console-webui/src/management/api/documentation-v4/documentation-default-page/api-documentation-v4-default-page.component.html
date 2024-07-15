@@ -19,7 +19,7 @@
   <api-documentation-home-page-header
     [isReadOnly]="isReadOnly"
     [hasPages]="page != null"
-    (onAddPage)="addPage($event)"
+    (addPage)="addPage($event)"
   ></api-documentation-home-page-header>
   <api-documentation-v4-pages-list
     *ngIf="page != null; else emptyState"

@@ -29,9 +29,9 @@ export class ApiDocumentationV4HomePageHeaderComponent {
   @Input()
   hasPages: boolean;
   @Output()
-  onAddPage = new EventEmitter<PageType>();
+  addPage = new EventEmitter<PageType>();
   @Output()
-  onChoosePage = new EventEmitter<string>();
+  selectPage = new EventEmitter<string>();
 
   readonly getLogoForPageType = getLogoForPageType;
   readonly getTitleForPageType = getTitleForPageType;
