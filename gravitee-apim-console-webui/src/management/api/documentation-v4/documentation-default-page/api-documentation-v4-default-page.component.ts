@@ -26,11 +26,11 @@ import { ApiV2Service } from '../../../../services-ngx/api-v2.service';
 import { Api, Breadcrumb, Page, PageType } from '../../../../entities/management-api-v2';
 
 @Component({
-  selector: 'api-documentation-home-page',
-  templateUrl: './api-documentation-v4-home-page.component.html',
-  styleUrls: ['./api-documentation-v4-home-page.component.scss'],
+  selector: 'api-documentation-default-page',
+  templateUrl: './api-documentation-v4-default-page.component.html',
+  styleUrls: ['./api-documentation-v4-default-page.component.scss'],
 })
-export class ApiDocumentationV4HomePageComponent implements OnInit, OnDestroy {
+export class ApiDocumentationV4DefaultPageComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
   api: Api;
   parentId: string;

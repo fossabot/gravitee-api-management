@@ -217,7 +217,7 @@ export class ApiV4MenuService implements ApiMenuService {
       tabs.push(
         {
           displayName: 'Default Pages',
-          routerLink: 'v4/documentation/home-pages',
+          routerLink: 'v4/documentation/default-pages',
           routerLinkActiveOptions: { exact: false },
         },
         {

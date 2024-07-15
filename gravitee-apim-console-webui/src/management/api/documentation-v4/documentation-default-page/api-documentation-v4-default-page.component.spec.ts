@@ -25,7 +25,7 @@ import { set } from 'lodash';
 import { InteractivityChecker } from '@angular/cdk/a11y';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
-import { ApiDocumentationV4HomePageComponent } from './api-documentation-v4-home-page.component';
+import { ApiDocumentationV4DefaultPageComponent } from './api-documentation-v4-default-page.component';
 
 import { GioTestingPermissionProvider } from '../../../../shared/components/gio-permission/gio-permission.service';
 import { Constants } from '../../../../entities/Constants';
@@ -36,7 +36,7 @@ import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
 import { ApiLifecycleState, Breadcrumb, fakeApiV4, Page } from '../../../../entities/management-api-v2';
 
 describe('ApiDocumentationV4HomePageComponent', () => {
-  let fixture: ComponentFixture<ApiDocumentationV4HomePageComponent>;
+  let fixture: ComponentFixture<ApiDocumentationV4DefaultPageComponent>;
   let harnessLoader: HarnessLoader;
   const API_ID = 'api-id';
   let httpTestingController: HttpTestingController;
@@ -50,7 +50,7 @@ describe('ApiDocumentationV4HomePageComponent', () => {
     apiLifecycleStatus: ApiLifecycleState = 'PUBLISHED',
   ) => {
     await TestBed.configureTestingModule({
-      declarations: [ApiDocumentationV4HomePageComponent],
+      declarations: [ApiDocumentationV4DefaultPageComponent],
       imports: [NoopAnimationsModule, ApiDocumentationV4Module, MatIconTestingModule, GioTestingModule],
       providers: [
         {
@@ -86,7 +86,7 @@ describe('ApiDocumentationV4HomePageComponent', () => {
       })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ApiDocumentationV4HomePageComponent);
+    fixture = TestBed.createComponent(ApiDocumentationV4DefaultPageComponent);
     harnessLoader = TestbedHarnessEnvironment.loader(fixture);
     httpTestingController = TestBed.inject(HttpTestingController);
     const router = TestBed.inject(Router);
