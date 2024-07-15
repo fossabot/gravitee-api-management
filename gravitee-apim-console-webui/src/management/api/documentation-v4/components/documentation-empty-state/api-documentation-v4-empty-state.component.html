@@ -17,8 +17,8 @@
 -->
 <div class="empty">
   <div class="empty__icon"><mat-icon svgIcon="gio:search"></mat-icon></div>
-  <div class="mat-h2">{{ getEmptyPageTitle() }}</div>
-  <div class="mat-body-2" *gioPermission="{ anyOf: ['api-documentation-c'] }">{{ getEmptyPageMessage() }}</div>
+  <div class="mat-h2">{{ emptyPageTitle }}</div>
+  <div class="mat-body-2" *gioPermission="{ anyOf: ['api-documentation-c'] }">{{ emptyPageMessage }}</div>
   <div class="">
     @if (mode === 'CUSTOM_PAGES') {
       <button

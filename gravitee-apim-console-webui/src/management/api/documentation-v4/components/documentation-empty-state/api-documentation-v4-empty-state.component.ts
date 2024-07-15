@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { getLogoForPageType, PageType, getTitleForPageType } from '../../../../../entities/management-api-v2';
@@ -24,19 +24,27 @@ import { getLogoForPageType, PageType, getTitleForPageType } from '../../../../.
   templateUrl: './api-documentation-v4-empty-state.component.html',
   styleUrls: ['./api-documentation-v4-empty-state.component.scss'],
 })
-export class ApiDocumentationV4EmptyStateComponent implements OnDestroy {
+export class ApiDocumentationV4EmptyStateComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   @Output()
   onAddPage = new EventEmitter<PageType>();
 
   @Input()
-  public isReadOnly = false;
+  isReadOnly = false;
 
   @Input()
   mode: 'DEFAULT_PAGES' | 'CUSTOM_PAGES' = 'CUSTOM_PAGES';
 
-  getEmptyPageTitle() {
+  emptyPageTitle: string;
+  emptyPageMessage: string;
+
+  ngOnInit(): void {
+    this.emptyPageTitle = this.getEmptyPageTitle();
+    this.emptyPageMessage = this.getEmptyPageMessage();
+  }
+
+  private getEmptyPageTitle() {
     if (this.mode === 'CUSTOM_PAGES') {
       return 'No pages available yet';
     } else {
@@ -44,7 +52,7 @@ export class ApiDocumentationV4EmptyStateComponent implements OnDestroy {
     }
   }
 
-  getEmptyPageMessage() {
+  private getEmptyPageMessage() {
     if (this.mode === 'CUSTOM_PAGES') {
       return 'Start creating pages to fill up your folder.';
     } else {
