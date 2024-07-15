@@ -57,7 +57,6 @@ import { ApiDocumentationV4MetadataComponent } from './documentation-metadata/ap
 import { ApiDocumentationV4HomePageComponent } from './documentation-home-page/api-documentation-v4-home-page.component';
 import { ApiDocumentationV4HomePageHeaderComponent } from './components/documentation-home-page-header/api-documentation-v4-home-page-header.component';
 import { ApiDocumentationV4HomePageElementComponent } from './documentation-home-page-element/api-documentation-v4-home-page-element.component';
-import { ApiDocumentationV4PageListComponent } from './components/api-documentation-v4-page-list-remove/api-documentation-v4-page-list.component';
 
 import { GioPermissionModule } from '../../../shared/components/gio-permission/gio-permission.module';
 import { GioTooltipOnEllipsisModule } from '../../../shared/components/gio-tooltip-on-ellipsis/gio-tooltip-on-ellipsis.module';
@@ -122,8 +121,7 @@ import { GioApiMetadataListModule } from '../component/gio-api-metadata-list/gio
     MatSelect,
     GioFormSlideToggleModule,
     MatSlideToggle,
-    GioFormJsonSchemaModule,
-    ApiDocumentationV4PageListComponent,
+    GioFormJsonSchemaModule
   ],
 })
 export class ApiDocumentationV4Module {}
