@@ -40,7 +40,7 @@ export class ApiDocumentationV4EmptyStateComponent implements OnDestroy {
     if (this.mode === 'CUSTOM_PAGES') {
       return 'No pages available yet';
     } else {
-      return 'No home pages set';
+      return 'No home page set';
     }
   }
 
