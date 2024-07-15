@@ -7,14 +7,20 @@ $typography: map.get(gio.$mat-theme, typography);
   border-bottom: 2px solid mat.get-color-from-palette(gio.$mat-dove-palette, 'darker10');
   padding: 12px 24px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* Adjusted for alignment */
   align-items: center;
   min-height: 54px;
+}
 
-  &__action {
-    min-width: 260px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-  }
+.header__action {
+  min-width: 260px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.header__title {
+  /* New class for the "Homepage" div */
+  font-size: 1.25rem; /* Example size, adjust as needed */
+  color: #000; /* Example color, adjust as needed */
 }

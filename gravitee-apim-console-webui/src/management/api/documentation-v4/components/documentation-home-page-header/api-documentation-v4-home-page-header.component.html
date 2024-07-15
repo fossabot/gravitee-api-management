@@ -16,26 +16,17 @@
 
 -->
 <div class="header">
+  <div class="header__title">Homepage</div>
   <div class="header__action" *gioPermission="{ anyOf: ['api-documentation-c'] }">
-    <div
-      class="breadcrumb__item"
-    >
-      Homepage
-    </div>
     <button [disabled]="hasPages" class="header__action__button" mat-stroked-button>Choose Existing Page</button>
-      <button [disabled]="hasPages" class="header__action__button" mat-flat-button color="primary" [matMenuTriggerFor]="menu">
-        Create New Page
+    <button [disabled]="hasPages" class="header__action__button" mat-flat-button color="primary" [matMenuTriggerFor]="menu">
+      Create New Page
+    </button>
+    <mat-menu #menu="matMenu">
+      <button *ngFor="let pageType of pageTypes" (click)="onAddPage.emit(pageType)" mat-menu-item>
+        {{ getTitleForPageType(pageType) }}
+        <img [ngSrc]="getLogoForPageType(pageType)" height="24" width="24" [alt]="getTitleForPageType(pageType).toLowerCase() + ' logo'" />
       </button>
-      <mat-menu #menu="matMenu">
-        <button *ngFor="let pageType of pageTypes" (click)="onAddPage.emit(pageType)" mat-menu-item>
-          {{ getTitleForPageType(pageType) }}
-          <img
-            [ngSrc]="getLogoForPageType(pageType)"
-            height="24"
-            width="24"
-            [alt]="getTitleForPageType(pageType).toLowerCase() + ' logo'"
-          />
-        </button>
-      </mat-menu>
+    </mat-menu>
   </div>
 </div>
