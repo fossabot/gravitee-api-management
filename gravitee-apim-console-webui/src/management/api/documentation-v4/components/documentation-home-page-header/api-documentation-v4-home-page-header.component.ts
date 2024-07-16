@@ -16,7 +16,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { getLogoForPageType, PageType, getTitleForPageType } from '../../../../../entities/management-api-v2';
+import { PageType } from '../../../../../entities/management-api-v2';
 
 @Component({
   selector: 'api-documentation-home-page-header',
@@ -32,8 +32,4 @@ export class ApiDocumentationV4HomePageHeaderComponent {
   addPage = new EventEmitter<PageType>();
   @Output()
   selectPage = new EventEmitter<string>();
-
-  readonly getLogoForPageType = getLogoForPageType;
-  readonly getTitleForPageType = getTitleForPageType;
-  pageTypes: PageType[] = ['MARKDOWN', 'SWAGGER', 'ASYNCAPI'];
 }
