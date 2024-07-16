@@ -21,7 +21,7 @@
   <div class="mat-body-2" *gioPermission="{ anyOf: ['api-documentation-c'] }">{{ emptyPageMessage }}</div>
   @if (shouldShowAddPadeButton) {
     <div class="">
-      <api-documentation-v4-add-page-button (addPage)="addPage.emit($event)" buttonCapture="Add new page">
+      <api-documentation-v4-add-page-button (addPage)="addPage.emit($event)" text="Add new page">
       </api-documentation-v4-add-page-button>
     </div>
   }

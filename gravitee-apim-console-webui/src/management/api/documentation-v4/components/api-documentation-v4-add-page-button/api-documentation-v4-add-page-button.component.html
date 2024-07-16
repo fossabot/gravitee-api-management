@@ -19,12 +19,12 @@
   <button
     class="empty__action"
     mat-flat-button
-    [disabled]="isReadOnly"
+    [disabled]="disabled"
     color="primary"
     [matMenuTriggerFor]="menu"
     *gioPermission="{ anyOf: ['api-documentation-c'] }"
   >
-    {{ buttonCapture }}
+    {{ text }}
   </button>
 
   <mat-menu #menu="matMenu">

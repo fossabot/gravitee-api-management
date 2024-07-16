@@ -31,7 +31,7 @@ interface PageTypeVM {
 })
 export class ApiDocumentationV4AddPageButtonComponent {
   @Input()
-  isReadOnly: boolean;
+  disabled: boolean = false;
 
   @Input()
   hasPages: boolean;
@@ -40,7 +40,7 @@ export class ApiDocumentationV4AddPageButtonComponent {
   addPage = new EventEmitter<PageType>();
 
   @Input()
-  buttonCapture: string;
+  text: string;
 
   private pageTypes: PageType[] = ['MARKDOWN', 'SWAGGER', 'ASYNCAPI'];
 
