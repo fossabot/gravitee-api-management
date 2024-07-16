@@ -33,14 +33,15 @@
         (onDeletePage)="deletePage($event)"
       ></api-documentation-v4-pages-list>
     } @else {
-      <api-documentation-empty-state
-        emptyPageTitle="No homepage set"
-        emptyPageMessage="You have not set up a homepage yet."
-        showAddPageButton="false"
-        *ngIf="!isLoading"
-        [isReadOnly]="isReadOnly"
-        (addPage)="addPage($event)"
-      ></api-documentation-empty-state>
+      @if (!isLoading) {
+        <api-documentation-empty-state
+          emptyPageTitle="No homepage set"
+          emptyPageMessage="You have not set up a homepage yet."
+          showAddPageButton="false"
+          [isReadOnly]="isReadOnly"
+          (addPage)="addPage($event)"
+        ></api-documentation-empty-state>
+      }
     }
   </mat-card-content>
 </mat-card>
