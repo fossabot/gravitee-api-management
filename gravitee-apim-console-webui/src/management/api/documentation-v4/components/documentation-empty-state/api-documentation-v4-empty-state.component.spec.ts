@@ -66,7 +66,7 @@ describe('ApiDocumentationV4EmptyStateComponent', () => {
   });
 
   it('should show menu to select page type and emit event when clicking on add button', async () => {
-    const spy = jest.spyOn(component.onAddPage, 'emit');
+    const spy = jest.spyOn(component.addPage, 'emit');
     const button = await harnessLoader.getHarness(MatButtonHarness.with({ text: 'Add new page' }));
     await button.click();
 

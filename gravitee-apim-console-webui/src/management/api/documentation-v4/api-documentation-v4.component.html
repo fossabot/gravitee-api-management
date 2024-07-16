@@ -22,7 +22,7 @@
     [isReadOnly]="isReadOnly"
     [hasPages]="pages && pages.length > 0"
     (onAddFolder)="addFolder()"
-    (onAddPage)="addPage($event)"
+    (addPage)="addPage($event)"
     (onNavigateTo)="navigateTo($event)"
   ></api-documentation-list-navigation-header>
   <api-documentation-v4-pages-list
@@ -41,10 +41,12 @@
   ></api-documentation-v4-pages-list>
   <ng-template #emptyState>
     <api-documentation-empty-state
-      mode="CUSTOM_PAGES"
+      emptyPageTitle="No pages available yet"
+      emptyPageMessage="Start creating pages to fill up your folder."
+      shouldShowAddPadeButton="true"
       *ngIf="!isLoading"
       [isReadOnly]="isReadOnly"
-      (onAddPage)="addPage($event)"
+      (addPage)="addPage($event)"
     ></api-documentation-empty-state>
   </ng-template>
 </mat-card>

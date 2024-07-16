@@ -15,14 +15,22 @@
     limitations under the License.
 
 -->
-<div class="empty">
-  <div class="empty__icon"><mat-icon svgIcon="gio:search"></mat-icon></div>
-  <div class="mat-h2">{{ emptyPageTitle }}</div>
-  <div class="mat-body-2" *gioPermission="{ anyOf: ['api-documentation-c'] }">{{ emptyPageMessage }}</div>
-  @if (shouldShowAddPadeButton) {
-    <div class="">
-      <api-documentation-v4-add-page-button (addPage)="addPage.emit($event)" buttonCapture="Add new page">
-      </api-documentation-v4-add-page-button>
-    </div>
-  }
+<div>
+  <button
+    class="empty__action"
+    mat-flat-button
+    [disabled]="isReadOnly"
+    color="primary"
+    [matMenuTriggerFor]="menu"
+    *gioPermission="{ anyOf: ['api-documentation-c'] }"
+  >
+    {{ buttonCapture }}
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button *ngFor="let pageType of pageTypes" (click)="addPage.emit(pageType)" mat-menu-item>
+      {{ getTitleForPageType(pageType) }}
+      <img [ngSrc]="getLogoForPageType(pageType)" height="24" width="24" [alt]="getTitleForPageType(pageType).toLowerCase() + ' logo'" />
+    </button>
+  </mat-menu>
 </div>

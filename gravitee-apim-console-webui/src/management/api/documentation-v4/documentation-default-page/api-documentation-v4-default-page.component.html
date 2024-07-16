@@ -33,10 +33,12 @@
   ></api-documentation-v4-pages-list>
   <ng-template #emptyState>
     <api-documentation-empty-state
-      mode="DEFAULT_PAGES"
+      emptyPageTitle="No homepage set"
+      emptyPageMessage="You have not set up a homepage yet."
+      shouldShowAddPadeButton="false"
       *ngIf="!isLoading"
       [isReadOnly]="isReadOnly"
-      (onAddPage)="addPage($event)"
+      (addPage)="addPage($event)"
     ></api-documentation-empty-state>
   </ng-template>
 </mat-card>

@@ -13,34 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { booleanAttribute, Component, EventEmitter, Input, Output } from '@angular/core';
+import { getLogoForPageType, getTitleForPageType, PageType } from '../../../../../entities/management-api-v2';
 
-import { getLogoForPageType, PageType, getTitleForPageType } from '../../../../../entities/management-api-v2';
+// interface PageTypeVM {
+//   pageType: PageType;
+//   src: string;
+//   alt: string;
+//   label: string;
+// }
 
 @Component({
-  selector: 'api-documentation-empty-state',
-  templateUrl: './api-documentation-v4-empty-state.component.html',
-  styleUrls: ['./api-documentation-v4-empty-state.component.scss'],
+  selector: 'api-documentation-v4-add-page-button',
+  templateUrl: './api-documentation-v4-add-page-button.component.html',
+  styleUrls: ['./api-documentation-v4-add-page-button.component.scss'],
 })
-export class ApiDocumentationV4EmptyStateComponent {
+export class ApiDocumentationV4AddPageButtonComponent {
+  @Input()
+  isReadOnly: boolean;
+
+  @Input()
+  hasPages: boolean;
+
   @Output()
   addPage = new EventEmitter<PageType>();
 
   @Input()
-  isReadOnly = false;
+  buttonCapture: string;
 
-  @Input({ transform: booleanAttribute })
-  shouldShowAddPadeButton!: boolean;
-
-  @Input()
-  emptyPageTitle!: string;
-
-  @Input()
-  emptyPageMessage!: string;
-
-  // expose constants
   readonly getLogoForPageType = getLogoForPageType;
   readonly getTitleForPageType = getTitleForPageType;
+
   pageTypes: PageType[] = ['MARKDOWN', 'SWAGGER', 'ASYNCAPI'];
+
+  // pageTypesVm: PageTypeVM[] = this.pageTypes.map((pageType) => ({
 }
