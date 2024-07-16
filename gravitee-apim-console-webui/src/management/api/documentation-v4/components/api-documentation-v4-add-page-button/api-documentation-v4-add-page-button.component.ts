@@ -17,12 +17,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { getLogoForPageType, getTitleForPageType, PageType } from '../../../../../entities/management-api-v2';
 
-// interface PageTypeVM {
-//   pageType: PageType;
-//   src: string;
-//   alt: string;
-//   label: string;
-// }
+interface PageTypeVM {
+  pageType: PageType;
+  label: string;
+  src: string;
+  alt: string;
+}
 
 @Component({
   selector: 'api-documentation-v4-add-page-button',
@@ -42,10 +42,12 @@ export class ApiDocumentationV4AddPageButtonComponent {
   @Input()
   buttonCapture: string;
 
-  readonly getLogoForPageType = getLogoForPageType;
-  readonly getTitleForPageType = getTitleForPageType;
+  private pageTypes: PageType[] = ['MARKDOWN', 'SWAGGER', 'ASYNCAPI'];
 
-  pageTypes: PageType[] = ['MARKDOWN', 'SWAGGER', 'ASYNCAPI'];
-
-  // pageTypesVm: PageTypeVM[] = this.pageTypes.map((pageType) => ({
+  pageTypesVm: PageTypeVM[] = this.pageTypes.map((pageType) => ({
+    pageType,
+    label: getTitleForPageType(pageType),
+    src: getLogoForPageType(pageType),
+    alt: getTitleForPageType(pageType).toLowerCase() + ' logo',
+  }));
 }

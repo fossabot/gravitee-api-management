@@ -27,11 +27,11 @@
     >
       Add new folder
     </button>
-    @if (!hasPages) {
-      <api-documentation-v4-add-page-button
-        (addPage)="addPage.emit($event)"
-        buttonCapture="Add new page"
-      ></api-documentation-v4-add-page-button>
-    }
+    <!--    @if (!hasPages) {-->
+    <api-documentation-v4-add-page-button
+      (addPage)="addPage.emit($event)"
+      buttonCapture="Add new page"
+    ></api-documentation-v4-add-page-button>
+    <!--    }-->
   </div>
 </div>

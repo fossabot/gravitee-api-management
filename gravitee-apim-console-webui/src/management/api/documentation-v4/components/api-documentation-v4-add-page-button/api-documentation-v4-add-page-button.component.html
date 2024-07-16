@@ -28,9 +28,11 @@
   </button>
 
   <mat-menu #menu="matMenu">
-    <button *ngFor="let pageType of pageTypes" (click)="addPage.emit(pageType)" mat-menu-item>
-      {{ getTitleForPageType(pageType) }}
-      <img [ngSrc]="getLogoForPageType(pageType)" height="24" width="24" [alt]="getTitleForPageType(pageType).toLowerCase() + ' logo'" />
-    </button>
+    @for (pageTypeVm of this.pageTypesVm; track pageTypeVm.pageType) {
+      <button (click)="addPage.emit(pageTypeVm.pageType)" mat-menu-item>
+        {{ pageTypeVm.label }}
+        <img [ngSrc]="pageTypeVm.src" height="24" width="24" [alt]="pageTypeVm.alt" />
+      </button>
+    }
   </mat-menu>
 </div>
