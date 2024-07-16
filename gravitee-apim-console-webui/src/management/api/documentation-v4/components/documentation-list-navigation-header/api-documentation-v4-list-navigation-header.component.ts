@@ -31,7 +31,7 @@ export class ApiDocumentationV4ListNavigationHeaderComponent {
   @Input()
   hasPages: boolean;
   @Output()
-  onAddFolder = new EventEmitter<void>();
+  addFolder = new EventEmitter<void>();
   @Output()
   addPage = new EventEmitter<PageType>();
   @Output()

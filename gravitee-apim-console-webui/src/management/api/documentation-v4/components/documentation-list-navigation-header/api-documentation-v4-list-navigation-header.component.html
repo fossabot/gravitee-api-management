@@ -21,7 +21,7 @@
     <button
       class="header__action__button"
       mat-stroked-button
-      (click)="onAddFolder.emit()"
+      (click)="addFolder.emit()"
       *gioPermission="{ anyOf: ['api-documentation-u'] }"
       [disabled]="isReadOnly"
     >

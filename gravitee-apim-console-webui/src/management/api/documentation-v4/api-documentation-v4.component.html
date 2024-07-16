@@ -21,7 +21,7 @@
     [breadcrumbs]="breadcrumbs || []"
     [isReadOnly]="isReadOnly"
     [hasPages]="pages && pages.length > 0"
-    (onAddFolder)="addFolder()"
+    (addFolder)="addFolder()"
     (addPage)="addPage($event)"
     (onNavigateTo)="navigateTo($event)"
   ></api-documentation-list-navigation-header>
