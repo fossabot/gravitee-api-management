@@ -31,7 +31,7 @@ export class ApiDocumentationV4EmptyStateComponent {
   isReadOnly = false;
 
   @Input({ transform: booleanAttribute })
-  shouldShowAddPadeButton!: boolean;
+  showAddPageButton: boolean = false;
 
   @Input()
   emptyPageTitle!: string;

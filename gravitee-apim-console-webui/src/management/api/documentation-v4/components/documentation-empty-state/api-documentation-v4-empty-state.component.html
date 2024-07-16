@@ -19,7 +19,7 @@
   <div class="empty__icon"><mat-icon svgIcon="gio:search"></mat-icon></div>
   <div class="mat-h2">{{ emptyPageTitle }}</div>
   <div class="mat-body-2" >{{ emptyPageMessage }}</div>
-  @if (shouldShowAddPadeButton) {
+  @if (showAddPageButton) {
     <div class="">
       <api-documentation-v4-add-page-button *gioPermission="{ anyOf: ['api-documentation-c'] }" (addPage)="addPage.emit($event)" text="Add new page">
       </api-documentation-v4-add-page-button>
