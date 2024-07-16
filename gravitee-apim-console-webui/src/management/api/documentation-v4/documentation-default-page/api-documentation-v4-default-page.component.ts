@@ -35,7 +35,6 @@ export class ApiDocumentationV4DefaultPageComponent implements OnInit, OnDestroy
   api: Api;
   parentId: string;
   page: Page;
-  breadcrumbs: Breadcrumb[];
   isLoading = false;
   isReadOnly = false;
 
@@ -67,7 +66,6 @@ export class ApiDocumentationV4DefaultPageComponent implements OnInit, OnDestroy
       )
       .subscribe((res) => {
         this.page = res.pages[0];
-        this.breadcrumbs = res.breadcrumb;
         this.isLoading = false;
       });
   }
