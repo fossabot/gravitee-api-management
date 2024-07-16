@@ -3,27 +3,22 @@
 @use '@gravitee/ui-particles-angular/index' as gio;
 $typography: map.get(gio.$mat-theme, typography);
 
-.header {
-  border-bottom: 2px solid mat.get-color-from-palette(gio.$mat-dove-palette, 'darker10');
-  padding: 12px 24px;
+:host {
   display: flex;
-  justify-content: space-between;
+  padding: 18px 32px;
   align-items: center;
-  min-height: 54px;
+  border-bottom: 2px solid mat.get-color-from-palette(gio.$mat-dove-palette, 'darker10');
 }
 
-.header__action {
-  min-width: 260px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
+.header {
+  &__action {
+    display: flex;
+    gap: 8px;
+  }
 
-.header__title {
-  @include mat.typography-level($typography, 'subtitle-2');
-  color: mat.get-color-from-palette(gio.$mat-space-palette, 'default');
-  max-width: 250px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  &__title {
+    flex: 1 1 100%;
+    margin: 0;
+  }
+
 }
