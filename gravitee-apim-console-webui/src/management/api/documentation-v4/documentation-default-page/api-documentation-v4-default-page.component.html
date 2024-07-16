@@ -22,17 +22,17 @@
     (addPage)="addPage($event)"
   ></api-documentation-home-page-header>
   <mat-card-content>
-    <api-documentation-v4-pages-list
-      *ngIf="page != null; else emptyState"
-      mode="HOME_PAGE"
-      [pages]="[page]"
-      [isReadOnly]="isReadOnly"
-      (onEditPage)="editPage($event)"
-      (onPublishPage)="publishPage($event)"
-      (onUnpublishPage)="unpublishPage($event)"
-      (onDeletePage)="deletePage($event)"
-    ></api-documentation-v4-pages-list>
-    <ng-template #emptyState>
+    @if (page != null) {
+      <api-documentation-v4-pages-list
+        mode="HOME_PAGE"
+        [pages]="[page]"
+        [isReadOnly]="isReadOnly"
+        (onEditPage)="editPage($event)"
+        (onPublishPage)="publishPage($event)"
+        (onUnpublishPage)="unpublishPage($event)"
+        (onDeletePage)="deletePage($event)"
+      ></api-documentation-v4-pages-list>
+    } @else {
       <api-documentation-empty-state
         emptyPageTitle="No homepage set"
         emptyPageMessage="You have not set up a homepage yet."
@@ -41,6 +41,6 @@
         [isReadOnly]="isReadOnly"
         (addPage)="addPage($event)"
       ></api-documentation-empty-state>
-    </ng-template>
+    }
   </mat-card-content>
 </mat-card>
