@@ -34,6 +34,7 @@ import { PageType } from '../../../../entities/page';
 import { CONSTANTS_TESTING, GioTestingModule } from '../../../../shared/testing';
 import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
 import { ApiLifecycleState, Breadcrumb, fakeApiV4, Page } from '../../../../entities/management-api-v2';
+import {ApiDocumentationV4DefaultPageHarness} from "./api-documentation-v4-default-page.harness";
 
 describe('ApiDocumentationV4DefaultPageComponent', () => {
   let fixture: ComponentFixture<ApiDocumentationV4DefaultPageComponent>;
@@ -118,8 +119,8 @@ describe('ApiDocumentationV4DefaultPageComponent', () => {
     });
 
     it('should navigate to create page', async () => {
-      const headerHarness = await harnessLoader.getHarness(ApiDocumentationV4EmptyStateHarness);
-      await headerHarness.clickAddNewPage(PageType.MARKDOWN);
+      const headerHarness = await harnessLoader.getHarness(ApiDocumentationV4DefaultPageHarness);
+      await headerHarness.clickCreateNewPage(PageType.MARKDOWN);
 
       expect(routerNavigateSpy).toHaveBeenCalledWith(['new'], {
         relativeTo: expect.anything(),
