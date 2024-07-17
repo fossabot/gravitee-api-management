@@ -26,6 +26,7 @@ import { InteractivityChecker } from '@angular/cdk/a11y';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 import { ApiDocumentationV4DefaultPageComponent } from './api-documentation-v4-default-page.component';
+import { ApiDocumentationV4DefaultPageHarness } from './api-documentation-v4-default-page.harness';
 
 import { GioTestingPermissionProvider } from '../../../../shared/components/gio-permission/gio-permission.service';
 import { Constants } from '../../../../entities/Constants';
@@ -34,7 +35,6 @@ import { PageType } from '../../../../entities/page';
 import { CONSTANTS_TESTING, GioTestingModule } from '../../../../shared/testing';
 import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
 import { ApiLifecycleState, Breadcrumb, fakeApiV4, Page } from '../../../../entities/management-api-v2';
-import {ApiDocumentationV4DefaultPageHarness} from "./api-documentation-v4-default-page.harness";
 
 describe('ApiDocumentationV4DefaultPageComponent', () => {
   let fixture: ComponentFixture<ApiDocumentationV4DefaultPageComponent>;

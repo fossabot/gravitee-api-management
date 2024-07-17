@@ -219,7 +219,6 @@ describe('ApiDocumentationV4', () => {
     it('should hide create page button when folder is empty', async () => {
       await init([], []);
       const headerHarness = await harnessLoader.getHarness(ApiDocumentationV4ListNavigationHeaderHarness);
-
       expect(await headerHarness.getNewPageButton()).toBeNull();
     });
 

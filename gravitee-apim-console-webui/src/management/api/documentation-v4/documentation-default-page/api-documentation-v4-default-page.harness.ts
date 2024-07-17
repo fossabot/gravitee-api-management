@@ -17,8 +17,8 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatMenuHarness } from '@angular/material/menu/testing';
-import {PageType} from "../../../../entities/page";
 
+import { PageType } from '../../../../entities/page';
 
 export class ApiDocumentationV4DefaultPageHarness extends ComponentHarness {
   static hostSelector = 'api-documentation-empty-state';
@@ -26,12 +26,8 @@ export class ApiDocumentationV4DefaultPageHarness extends ComponentHarness {
   private menuLocator = this.locatorFor(MatMenuHarness);
 
   async clickCreateNewPage(pageType: PageType) {
-    const btn = await this.createNewPageButtonLocator();
-    if (!btn) {
-      console.error('Create New Page button not found.');
-      return;
-    }
-    await btn.click();
+    const button = await this.createNewPageButtonLocator();
+    await button.click();
     const menu = await this.menuLocator();
     await menu.clickItem({ text: new RegExp(pageType, 'i') });
   }
