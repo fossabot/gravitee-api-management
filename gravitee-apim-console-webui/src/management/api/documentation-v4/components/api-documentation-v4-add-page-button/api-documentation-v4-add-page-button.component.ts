@@ -27,7 +27,6 @@ interface PageTypeVM {
 @Component({
   selector: 'api-documentation-v4-add-page-button',
   templateUrl: './api-documentation-v4-add-page-button.component.html',
-  styleUrls: ['./api-documentation-v4-add-page-button.component.scss'],
 })
 export class ApiDocumentationV4AddPageButtonComponent {
   @Input()
