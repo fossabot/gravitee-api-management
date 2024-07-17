@@ -122,7 +122,7 @@ describe('ApiDocumentationV4DefaultPageComponent', () => {
       const headerHarness = await harnessLoader.getHarness(ApiDocumentationV4DefaultPageHarness);
       await headerHarness.clickCreateNewPage(PageType.MARKDOWN);
 
-      expect(routerNavigateSpy).toHaveBeenCalledWith(['new'], {
+      expect(routerNavigateSpy).toHaveBeenCalledWith(['.', 'homepage', 'new'], {
         relativeTo: expect.anything(),
         queryParams: { parentId: 'ROOT', pageType: 'MARKDOWN' },
       });
