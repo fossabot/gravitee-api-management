@@ -26,7 +26,6 @@ import { InteractivityChecker } from '@angular/cdk/a11y';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 import { ApiDocumentationV4DefaultPageComponent } from './api-documentation-v4-default-page.component';
-import { ApiDocumentationV4DefaultPageHarness } from './api-documentation-v4-default-page.harness';
 
 import { GioTestingPermissionProvider } from '../../../../shared/components/gio-permission/gio-permission.service';
 import { Constants } from '../../../../entities/Constants';
@@ -35,6 +34,7 @@ import { PageType } from '../../../../entities/page';
 import { CONSTANTS_TESTING, GioTestingModule } from '../../../../shared/testing';
 import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
 import { ApiLifecycleState, Breadcrumb, fakeApiV4, Page } from '../../../../entities/management-api-v2';
+import { ApiDocumentationV4DefaultPageHarness } from '../components/documentation-home-page-header/api-documentation-v4-home-page-header.harness';
 
 describe('ApiDocumentationV4DefaultPageComponent', () => {
   let fixture: ComponentFixture<ApiDocumentationV4DefaultPageComponent>;
@@ -120,6 +120,9 @@ describe('ApiDocumentationV4DefaultPageComponent', () => {
 
     it('should navigate to create page', async () => {
       const headerHarness = await harnessLoader.getHarness(ApiDocumentationV4DefaultPageHarness);
+      const createNewPageBtn = await headerHarness.getCreateNewPageButton();
+      expect(createNewPageBtn).toBeDefined();
+      expect(await createNewPageBtn.isDisabled()).toEqual(false);
       await headerHarness.clickCreateNewPage(PageType.MARKDOWN);
 
       expect(routerNavigateSpy).toHaveBeenCalledWith(['.', 'homepage', 'new'], {
