@@ -49,7 +49,7 @@ export class HomeLayoutComponent {
     },
     {
       label: of('Broadcasts'),
-      routerLink: './broadcasts'
+      routerLink: './broadcasts',
     },
   ];
 

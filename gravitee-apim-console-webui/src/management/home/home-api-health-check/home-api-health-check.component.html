@@ -17,8 +17,8 @@
 -->
 
 <gio-banner-info>
-  Each API is monitored by a periodic HTTP request to the health check endpoint. The API backend receives the request and 
-  responds, and the health check service determines if the response is as expected.
+  Each API is monitored by a periodic HTTP request to the health check endpoint. The API backend receives the request and responds, and the
+  health check service determines if the response is as expected.
 </gio-banner-info>
 
 <mat-card>
@@ -26,7 +26,9 @@
     <div>
       <gio-quick-time-range [formControl]="timeFrameControl" (onRefreshClicked)="onRefreshClicked()"></gio-quick-time-range>
       <!-- button to set filter-->
-      <button mat-stroked-button class="only-configured-button" (click)="onOnlyHCConfigured()">Filter to APIs with Health Check enabled</button>
+      <button mat-stroked-button class="only-configured-button" (click)="onOnlyHCConfigured()">
+        Filter to APIs with Health Check enabled
+      </button>
     </div>
     <gio-banner
       *ngIf="allApisHCStatus"

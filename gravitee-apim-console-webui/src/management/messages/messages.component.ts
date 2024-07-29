@@ -60,9 +60,10 @@ export class MessagesComponent implements OnInit, OnDestroy {
       .subscribe((roles) => {
         const sortedRoles = sortBy(roles, ['name']);
         this.recipients = sortedRoles.map((role) => {
-          const displayName = this.scope === 'APPLICATION' ?
-            `Members with the ${role.name} role on applications subscribed to this API` :
-            `Members with the ${role.name} role on this environment`
+          const displayName =
+            this.scope === 'APPLICATION'
+              ? `Members with the ${role.name} role on applications subscribed to this API`
+              : `Members with the ${role.name} role on this environment`;
           return {
             name: role.name,
             displayName,
