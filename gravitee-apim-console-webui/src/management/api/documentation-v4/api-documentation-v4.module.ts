@@ -77,7 +77,7 @@ import { GioApiMetadataListModule } from '../component/gio-api-metadata-list/gio
     ApiDocumentationV4PagesListComponent,
     ApiDocumentationV4MetadataComponent,
   ],
-  exports: [ApiDocumentationV4Component/*, ApiDocumentationV4PageTitleComponent*/],
+  exports: [ApiDocumentationV4Component /* , ApiDocumentationV4PageTitleComponent*/],
   imports: [
     CommonModule,
     FormsModule,
@@ -121,6 +121,7 @@ import { GioApiMetadataListModule } from '../component/gio-api-metadata-list/gio
     ApiDocumentationV4ContentEditorComponent,
     ApiDocumentationV4BreadcrumbComponent,
     ApiDocumentationV4FileUploadComponent,
+    ApiDocumentationV4PageTitleComponent,
   ],
 })
 export class ApiDocumentationV4Module {}

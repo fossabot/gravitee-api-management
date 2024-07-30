@@ -18,22 +18,27 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
-import { FormsModule } from '@angular/forms';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { InteractivityChecker } from '@angular/cdk/a11y';
 import { set } from 'lodash';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
-
-import * as Constants from 'node:constants';
 
 import { DocumentationEditCustomPageComponent } from './documentation-edit-custom-page.component';
 
-import { Breadcrumb, Page, fakeMarkdown, Group, fakeGroupsResponse, fakeGroup } from '../../../../entities/management-api-v2';
-import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
+import {
+  Breadcrumb,
+  Page,
+  fakeMarkdown,
+  Group,
+  fakeGroupsResponse,
+  fakeGroup,
+  Api,
+  fakeApiV2,
+} from '../../../../entities/management-api-v2';
 import { CONSTANTS_TESTING, GioTestingModule } from '../../../../shared/testing';
 import { GioTestingPermissionProvider } from '../../../../shared/components/gio-permission/gio-permission.service';
 import { ApiDocumentationV4PageTitleHarness } from '../components/api-documentation-v4-page-title/api-documentation-v4-page-title.harness';
+import { Constants } from '../../../../entities/Constants';
 
 interface InitInput {
   pages?: Page[];
@@ -64,26 +69,22 @@ describe('DocumentationEditCustomPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [DocumentationEditCustomPageComponent, NoopAnimationsModule, MatIconTestingModule, GioTestingModule],
       providers: [
-        // {
-        //   provide: ActivatedRoute,
-        //   useValue: { snapshot: { params: { apiId: API_ID, pageId }, queryParams: { parentId, pageType: 'MARKDOWN' } } },
-        // },
-        // { provide: GioTestingPermissionProvider, useValue: apiPermissions },
-        // {
-        //   provide: Constants,
-        //   useFactory: () => {
-        //     const constants = CONSTANTS_TESTING;
-        //     set(constants, 'env.settings.portal', {
-        //       get url() {
-        //         return portalUrl;
-        //       },
-        //     });
-        //     return constants;
-        //   },
-        // },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: { apiId: API_ID, pageId }, queryParams: { parentId, pageType: 'MARKDOWN' } } },
+        },
+        { provide: GioTestingPermissionProvider, useValue: apiPermissions },
         {
           provide: Constants,
-          useValue: CONSTANTS_TESTING,
+          useFactory: () => {
+            const constants = CONSTANTS_TESTING;
+            set(constants, 'env.settings.portal', {
+              get url() {
+                return portalUrl;
+              },
+            });
+            return constants;
+          },
         },
       ],
     })
@@ -99,7 +100,7 @@ describe('DocumentationEditCustomPageComponent', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
 
-    expectGetApiId(PAGE);
+    expectGetApiId(fakeApiV2({ id: API_ID, lifecycleState: 'PUBLISHED' }));
     fixture.detectChanges();
   };
 
@@ -123,7 +124,6 @@ describe('DocumentationEditCustomPageComponent', () => {
       const header = await harnessLoader.getHarness(ApiDocumentationV4PageTitleHarness);
       expect(header).toBeDefined();
       const openInPortalBtn = await header.getOpenInPortalBtn();
-      console.log(fixture.debugElement.nativeElement.innerHTML);
       expect(openInPortalBtn).toBeTruthy();
       expect(await openInPortalBtn.isDisabled()).toEqual(false);
     });
@@ -140,7 +140,7 @@ describe('DocumentationEditCustomPageComponent', () => {
   const expectGetPages = (pages: Page[], breadcrumb: Breadcrumb[], parentId = 'ROOT') => {
     const req = httpTestingController.expectOne({
       method: 'GET',
-      url: `${CONSTANTS_TESTING.env.v2BaseURL}/apis/${PAGE.id}/pages?parentId=${parentId}`,
+      url: `${CONSTANTS_TESTING.env.v2BaseURL}/apis/${API_ID}/pages?parentId=${parentId}`,
     });
 
     req.flush({ pages, breadcrumb });
@@ -149,19 +149,19 @@ describe('DocumentationEditCustomPageComponent', () => {
   const expectGetPage = (page: Page) => {
     const req = httpTestingController.expectOne({
       method: 'GET',
-      url: `${CONSTANTS_TESTING.env.v2BaseURL}/apis/${page.id}/pages/${page.id}`,
+      url: `${CONSTANTS_TESTING.env.v2BaseURL}/apis/${API_ID}/pages/${page.id}`,
     });
 
     req.flush(page);
   };
 
-  const expectGetApiId = (page: Page) => {
+  const expectGetApiId = (api: Api) => {
     const req = httpTestingController.expectOne({
       method: 'GET',
       url: `${CONSTANTS_TESTING.env.v2BaseURL}/apis/${API_ID}`,
     });
 
-    req.flush(page);
+    req.flush(api);
   };
 
   const expectGetGroups = (groups: Group[]) => {

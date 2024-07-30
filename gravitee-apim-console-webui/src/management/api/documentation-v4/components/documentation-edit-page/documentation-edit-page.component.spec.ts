@@ -25,7 +25,6 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { InteractivityChecker } from '@angular/cdk/a11y';
 import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
-import { set } from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -47,7 +46,6 @@ import {
 import { ApiDocumentationV4ContentEditorHarness } from '../api-documentation-v4-content-editor/api-documentation-v4-content-editor.harness';
 import { ApiDocumentationV4BreadcrumbHarness } from '../api-documentation-v4-breadcrumb/api-documentation-v4-breadcrumb.harness';
 import { ApiDocumentationV4FileUploadHarness } from '../api-documentation-v4-file-upload/api-documentation-v4-file-upload.harness';
-import { Constants } from '../../../../../entities/Constants';
 import { GioTestingPermissionProvider } from '../../../../../shared/components/gio-permission/gio-permission.service';
 
 interface InitInput {
@@ -67,7 +65,6 @@ describe('DocumentationEditPageComponent', () => {
   const init = async (
     parentId: string,
     pageId: string,
-    portalUrl = 'portal.url',
     apiPermissions = ['api-documentation-u', 'api-documentation-c', 'api-documentation-r', 'api-documentation-d'],
   ) => {
     await TestBed.configureTestingModule({
@@ -86,18 +83,6 @@ describe('DocumentationEditPageComponent', () => {
           useValue: { snapshot: { params: { apiId: API_ID, pageId }, queryParams: { parentId, pageType: 'MARKDOWN' } } },
         },
         { provide: GioTestingPermissionProvider, useValue: apiPermissions },
-        {
-          provide: Constants,
-          useFactory: () => {
-            const constants = CONSTANTS_TESTING;
-            set(constants, 'env.settings.portal', {
-              get url() {
-                return portalUrl;
-              },
-            });
-            return constants;
-          },
-        },
       ],
     })
       .overrideProvider(InteractivityChecker, {
@@ -153,7 +138,7 @@ describe('DocumentationEditPageComponent', () => {
         const exitBtn = await harnessLoader.getHarness(MatButtonHarness.with({ text: 'Exit without saving' }));
         await exitBtn.click();
 
-        expect(routerNavigateSpy).toHaveBeenCalledWith(undefined, {
+        expect(routerNavigateSpy).toHaveBeenCalledWith([], {
           relativeTo: expect.objectContaining({
             snapshot: expect.objectContaining({
               params: {
@@ -1048,7 +1033,7 @@ describe('DocumentationEditPageComponent', () => {
         const exitBtn = await harnessLoader.getHarness(MatButtonHarness.with({ text: 'Exit without saving' }));
         await exitBtn.click();
 
-        expect(routerNavigateSpy).toHaveBeenCalledWith(undefined, {
+        expect(routerNavigateSpy).toHaveBeenCalledWith([], {
           relativeTo: expect.objectContaining({
             snapshot: expect.objectContaining({
               params: {
@@ -1074,7 +1059,7 @@ describe('DocumentationEditPageComponent', () => {
       });
 
       beforeEach(async () => {
-        await init(undefined, PAGE.id, 'portal.url', ['api-documentation-r']);
+        await init(undefined, PAGE.id, ['api-documentation-r']);
         initPageServiceRequests({ pages: [PAGE], breadcrumb: [], parentId: undefined, mode: 'edit' }, PAGE);
       });
 

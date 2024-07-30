@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 import { MatCard } from '@angular/material/card';
-import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
-import {AsyncPipe} from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 
 import { DocumentationEditPageComponent } from '../components/documentation-edit-page/documentation-edit-page.component';
 import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
-import {Api} from "../../../../entities/management-api-v2";
-import {ApiV2Service} from "../../../../services-ngx/api-v2.service";
-
+import { Api } from '../../../../entities/management-api-v2';
+import { ApiV2Service } from '../../../../services-ngx/api-v2.service';
 
 @Component({
   selector: 'documentation-edit-homepage',
@@ -33,7 +32,6 @@ import {ApiV2Service} from "../../../../services-ngx/api-v2.service";
   styleUrl: './documentation-edit-homepage.component.scss',
 })
 export class DocumentationEditHomepageComponent implements OnInit {
-
   api$: Observable<Api>;
 
   constructor(

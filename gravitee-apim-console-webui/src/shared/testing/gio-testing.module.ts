@@ -63,10 +63,10 @@ export const CONSTANTS_TESTING: Constants = {
     GioFormJsonSchemaExtendedModule,
   ],
   providers: [
-    // {
-    //   provide: Constants,
-    //   useValue: CONSTANTS_TESTING,
-    // },
+    {
+      provide: Constants,
+      useValue: CONSTANTS_TESTING,
+    },
     provideMomentDateAdapter(undefined, { useUtc: true }),
     importProvidersFrom(GioFormJsonSchemaModule),
   ],
