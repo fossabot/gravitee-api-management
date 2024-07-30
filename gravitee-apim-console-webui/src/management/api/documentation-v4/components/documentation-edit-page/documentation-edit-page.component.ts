@@ -38,7 +38,6 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ApiDocumentationV2Service } from '../../../../../services-ngx/api-documentation-v2.service';
-import { ApiV2Service } from '../../../../../services-ngx/api-v2.service';
 import { GroupV2Service } from '../../../../../services-ngx/group-v2.service';
 import { GioPermissionService } from '../../../../../shared/components/gio-permission/gio-permission.service';
 import { SnackBarService } from '../../../../../services-ngx/snack-bar.service';
@@ -150,7 +149,6 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly router: Router,
-    private readonly apiV2Service: ApiV2Service,
     private readonly apiDocumentationService: ApiDocumentationV2Service,
     private readonly groupService: GroupV2Service,
     private readonly permissionService: GioPermissionService,
@@ -160,6 +158,7 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log("ngOnInit");
     this.form = new FormGroup<EditPageForm>({
       stepOne: new FormGroup({
         name: new FormControl<string>('', [Validators.required, this.pageNameUniqueValidator()]),
@@ -243,6 +242,7 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
       map((list) => list.find((fetcher) => fetcher.id === this.httpFetcherName)?.schema),
       map((schema) => JSON.parse(schema)),
     );
+    console.log("schema$", this.schema$);
     this.form.controls.stepOne.controls.name.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((value) => (this.pageTitle = value || 'Add new page'));

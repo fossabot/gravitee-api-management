@@ -119,7 +119,9 @@ describe('DocumentationEditCustomPageComponent', () => {
       const header = await harnessLoader.getHarness(ApiDocumentationV4PageTitleHarness);
       expect(header).toBeDefined();
       const openInPortalBtn = await header.getOpenInPortalBtn();
-      expect(openInPortalBtn).toBeDefined();
+      console.log(fixture.debugElement.nativeElement.innerHTML);
+      expect(openInPortalBtn).toBeTruthy();
+      expect(await openInPortalBtn.isDisabled()).toEqual(false);
     });
 
     it('should not display Open in Portal button if Portal url not defined', async () => {
