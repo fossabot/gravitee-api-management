@@ -14,16 +14,33 @@
  * limitations under the License.
  */
 import { MatCard } from '@angular/material/card';
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import { DocumentationEditPageComponent } from '../components/documentation-edit-page/documentation-edit-page.component';
 import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
+import {Observable} from "rxjs";
+import {Api} from "../../../../entities/management-api-v2";
+import {ActivatedRoute} from "@angular/router";
+import {ApiV2Service} from "../../../../services-ngx/api-v2.service";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'documentation-edit-homepage',
   standalone: true,
   templateUrl: './documentation-edit-homepage.component.html',
-  imports: [DocumentationEditPageComponent, MatCard, ApiDocumentationV4Module],
+  imports: [DocumentationEditPageComponent, MatCard, ApiDocumentationV4Module, AsyncPipe],
   styleUrl: './documentation-edit-homepage.component.scss',
 })
-export class DocumentationEditHomepageComponent {}
+export class DocumentationEditHomepageComponent implements OnInit {
+
+  api$: Observable<Api>;
+
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly apiV2Service: ApiV2Service,
+  ) {}
+
+  ngOnInit() {
+    this.api$ = this.apiV2Service.get(this.activatedRoute.snapshot.params.apiId);
+  }
+}

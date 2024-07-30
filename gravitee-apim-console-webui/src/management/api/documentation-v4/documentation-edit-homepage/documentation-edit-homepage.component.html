@@ -15,4 +15,6 @@
     limitations under the License.
 
 -->
-<documentation-edit-page [createHomepage]="'true'" [goBackRouterLinks]="['../']"> </documentation-edit-page>
+@if (api$ | async; as api) {
+  <documentation-edit-page [api]="api" [goBackRouterLinks]="['../']"></documentation-edit-page>
+}

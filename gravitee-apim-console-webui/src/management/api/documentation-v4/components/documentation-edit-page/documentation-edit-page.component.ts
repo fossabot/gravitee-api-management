@@ -158,7 +158,6 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log("ngOnInit");
     this.form = new FormGroup<EditPageForm>({
       stepOne: new FormGroup({
         name: new FormControl<string>('', [Validators.required, this.pageNameUniqueValidator()]),
@@ -242,7 +241,6 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
       map((list) => list.find((fetcher) => fetcher.id === this.httpFetcherName)?.schema),
       map((schema) => JSON.parse(schema)),
     );
-    console.log("schema$", this.schema$);
     this.form.controls.stepOne.controls.name.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((value) => (this.pageTitle = value || 'Add new page'));
