@@ -15,14 +15,15 @@
  */
 import { MatCard } from '@angular/material/card';
 import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
+import {AsyncPipe} from "@angular/common";
 
 import { DocumentationEditPageComponent } from '../components/documentation-edit-page/documentation-edit-page.component';
 import { ApiDocumentationV4Module } from '../api-documentation-v4.module';
-import {Observable} from "rxjs";
 import {Api} from "../../../../entities/management-api-v2";
-import {ActivatedRoute} from "@angular/router";
 import {ApiV2Service} from "../../../../services-ngx/api-v2.service";
-import {AsyncPipe} from "@angular/common";
+
 
 @Component({
   selector: 'documentation-edit-homepage',
