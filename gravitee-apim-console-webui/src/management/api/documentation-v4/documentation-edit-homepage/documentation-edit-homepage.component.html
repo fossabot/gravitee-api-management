@@ -16,5 +16,9 @@
 
 -->
 @if (api$ | async; as api) {
-  <documentation-edit-page [api]="api" [goBackRouterLinks]="['../']"></documentation-edit-page>
+  <documentation-edit-page
+    [createHomepage]="'true'"
+    [api]="api"
+    [goBackRouterLinks]="['../']">
+  </documentation-edit-page>
 }
