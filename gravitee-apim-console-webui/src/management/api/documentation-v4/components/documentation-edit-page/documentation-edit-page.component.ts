@@ -115,7 +115,7 @@ interface EditPageForm {
 })
 export class DocumentationEditPageComponent implements OnInit, OnDestroy {
   @Input()
-  goBackRouterLinks: string[];
+  goBackRouterLink: string[];
 
   @Input()
   createHomepage: string;
@@ -254,8 +254,8 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  onGoBackRouterLinks(): void {
-    this.router.navigate(this.goBackRouterLinks, { relativeTo: this.activatedRoute });
+  onGoBackRouterLink(): void {
+    this.router.navigate(this.goBackRouterLink, { relativeTo: this.activatedRoute });
   }
 
   ngOnDestroy() {

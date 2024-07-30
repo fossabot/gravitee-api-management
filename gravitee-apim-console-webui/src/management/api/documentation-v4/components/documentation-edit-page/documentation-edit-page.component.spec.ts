@@ -114,6 +114,7 @@ describe('DocumentationEditPageComponent', () => {
     routerNavigateSpy = jest.spyOn(router, 'navigate');
 
     fixture.componentInstance.api = fakeApiV4({ id: API_ID, lifecycleState: 'PUBLISHED' });
+    fixture.componentInstance.goBackRouterLink = [];
     fixture.detectChanges();
   };
 

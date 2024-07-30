@@ -62,24 +62,28 @@ describe('DocumentationEditCustomPageComponent', () => {
     apiPermissions = ['api-documentation-u', 'api-documentation-c', 'api-documentation-r', 'api-documentation-d'],
   ) => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, ApiDocumentationV4Module, MatIconTestingModule, FormsModule, GioTestingModule, CommonModule],
+      imports: [DocumentationEditCustomPageComponent, NoopAnimationsModule, MatIconTestingModule, GioTestingModule],
       providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: { snapshot: { params: { apiId: API_ID, pageId }, queryParams: { parentId, pageType: 'MARKDOWN' } } },
-        },
-        { provide: GioTestingPermissionProvider, useValue: apiPermissions },
+        // {
+        //   provide: ActivatedRoute,
+        //   useValue: { snapshot: { params: { apiId: API_ID, pageId }, queryParams: { parentId, pageType: 'MARKDOWN' } } },
+        // },
+        // { provide: GioTestingPermissionProvider, useValue: apiPermissions },
+        // {
+        //   provide: Constants,
+        //   useFactory: () => {
+        //     const constants = CONSTANTS_TESTING;
+        //     set(constants, 'env.settings.portal', {
+        //       get url() {
+        //         return portalUrl;
+        //       },
+        //     });
+        //     return constants;
+        //   },
+        // },
         {
           provide: Constants,
-          useFactory: () => {
-            const constants = CONSTANTS_TESTING;
-            set(constants, 'env.settings.portal', {
-              get url() {
-                return portalUrl;
-              },
-            });
-            return constants;
-          },
+          useValue: CONSTANTS_TESTING,
         },
       ],
     })

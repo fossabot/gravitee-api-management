@@ -17,11 +17,19 @@ import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@ang
 
 import { Constants } from '../../../../../entities/Constants';
 import { Api } from '../../../../../entities/management-api-v2';
+import {MatAnchor, MatButtonModule} from "@angular/material/button";
+import {MatTooltip} from "@angular/material/tooltip";
 
 @Component({
   selector: 'api-documentation-page-title',
   templateUrl: './api-documentation-v4-page-title.component.html',
   styleUrls: ['./api-documentation-v4-page-title.component.scss'],
+  standalone: true,
+  imports: [
+    MatAnchor,
+    MatTooltip,
+    MatButtonModule
+  ]
 })
 export class ApiDocumentationV4PageTitleComponent implements OnInit, OnChanges {
   @Input()
