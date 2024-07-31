@@ -64,47 +64,36 @@ export interface PageRedirection {
 })
 export class PortalBannerComponent implements OnInit {
   form: FormGroup<BannerForm>;
-  pageRedirections: PageRedirection[] = [
-    {name: 'Top Bar', id: '0'},
-    {name: 'Catalog', id: '1'},
-    {name: 'API', id: '2'},
-    {name: 'Banner', id: '3'},
-    {name: 'Theme', id: '4'},
-  ];
 
   constructor(
     private readonly environmentSettings: EnvironmentSettingsService,
   ) {}
 
   ngOnInit(): void {
-    console.log('pageRedirections size: ' + this.pageRedirections.length);
     this.initialize();
-    this.form.get('bannerType').valueChanges.subscribe(value => {
-      this.onBannerTypeChange(value);
-    });
   }
 
   private initialize() {
     const environment = this.environmentSettings.getSnapshot();
+    console.log("environment.portalNext.bannerConfigEnabled", environment.portalNext.bannerConfigEnabled)
     this.form = new FormGroup<BannerForm>({
-      enabled: new FormControl<boolean>(environment.portalNext.banner.enabled, [Validators.required]),
-      titleText: new FormControl<string>(environment.portalNext.banner.title, [Validators.required]),
-      subTitleText: new FormControl<string>(environment.portalNext.banner.subtitle, [Validators.required]),
+      enabled: new FormControl<boolean>(environment.portalNext.bannerConfigEnabled, [Validators.required]),
+      titleText: new FormControl<string>(environment.portalNext.bannerConfigTitle, [Validators.required]),
+      subTitleText: new FormControl<string>(environment.portalNext.bannerConfigSubtitle, [Validators.required]),
     });
   }
 
   reset() {
     this.form.reset();
     this.initialize();
-
   }
 
   submit() {
     console.log("Form submitted 🚀");
   }
 
-  onBannerTypeChange(value: string) {
-    this.form.get('enabled').setValue(value === 'None');
+  onBannerTypeChange(value: boolean) {
+    this.form.get('enabled').setValue(value);
   }
   protected readonly of = of;
 }

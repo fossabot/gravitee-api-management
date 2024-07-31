@@ -44,4 +44,13 @@ public class PortalNext {
 
     @ParameterKey(Key.PORTAL_NEXT_BANNER)
     private Banner banner;
+
+    @ParameterKey(Key.PORTAL_NEXT_BANNER_CONFIG_TITLE)
+    private String bannerConfigTitle;
+
+    @ParameterKey(Key.PORTAL_NEXT_BANNER_CONFIG_SUBTITLE)
+    private String bannerConfigSubtitle;
+
+    @ParameterKey(Key.PORTAL_NEXT_BANNER_CONFIG_ENABLED)
+    private Boolean bannerConfigEnabled;
 }

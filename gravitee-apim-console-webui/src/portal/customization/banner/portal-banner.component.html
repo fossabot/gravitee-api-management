@@ -25,17 +25,16 @@
       <mat-radio-group
         class="status__radio-group"
         aria-label="Select a status"
-        formControlName="bannerType"
+        formControlName="enabled"
         (change)="onBannerTypeChange($event.value)"
       >
-        <mat-radio-button class="status__radio-group__button" value="None">
+        <mat-radio-button class="status__radio-group__button" [value]="false">
           None
         </mat-radio-button>
-        <mat-radio-button class="status__radio-group__button" value="Featured Banner">
+        <mat-radio-button class="status__radio-group__button" [value]="true">
           Featured banner
         </mat-radio-button>
       </mat-radio-group>
-
 
       @if (form.controls.enabled.value) {
         <img class="card__header__logo" src="/assets/banner-featured.svg" alt="Gravitee.io" />

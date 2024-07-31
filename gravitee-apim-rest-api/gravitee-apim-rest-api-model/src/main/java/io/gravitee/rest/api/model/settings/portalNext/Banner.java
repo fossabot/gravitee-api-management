@@ -8,12 +8,12 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Banner {
-    @ParameterKey(Key.PORTAL_NEXT_BANNER_TITLE)
+    @ParameterKey(Key.PORTAL_NEXT_BANNER_CONFIG_TITLE)
     private String title;
 
-    @ParameterKey(Key.PORTAL_NEXT_BANNER_SUBTITLE)
+    @ParameterKey(Key.PORTAL_NEXT_BANNER_CONFIG_SUBTITLE)
     private String subtitle;
 
-    @ParameterKey(Key.PORTAL_NEXT_BANNER_ENABLED)
+    @ParameterKey(Key.PORTAL_NEXT_BANNER_CONFIG_ENABLED)
     private Boolean enabled;
 }
