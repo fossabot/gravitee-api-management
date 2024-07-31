@@ -23,23 +23,16 @@ import {GioFormSlideToggleModule, GioSaveBarModule} from '@gravitee/ui-particles
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { of } from 'rxjs';
 
-import { BannerType, BannerEnum } from '../../../entities/management-api-v2/documentation/bannerType';
 import { GioRoleModule } from '../../../shared/components/gio-role/gio-role.module';
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
-import {Group} from "../../../entities/management-api-v2";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {EnvironmentSettingsService} from "../../../services-ngx/environment-settings.service";
 
 interface BannerForm {
-  bannerType: FormControl<BannerType>;
+  enabled: FormControl<boolean>;
   titleText: FormControl<string>;
   subTitleText: FormControl<string>;
-  primaryButtonText: FormControl<string>;
-  primaryButtonEnabled: FormControl<boolean>;
-  primaryButtonRedirection: FormControl<string[]>;
-  secondaryButtonText: FormControl<string>;
-  secondaryButtonEnabled: FormControl<boolean>;
-  secondaryButtonRedirection: FormControl<string[]>;
 }
 
 export interface PageRedirection {
@@ -71,7 +64,6 @@ export interface PageRedirection {
 })
 export class PortalBannerComponent implements OnInit {
   form: FormGroup<BannerForm>;
-  bannerTypes = Object.values(BannerEnum);
   pageRedirections: PageRedirection[] = [
     {name: 'Top Bar', id: '0'},
     {name: 'Catalog', id: '1'},
@@ -80,30 +72,39 @@ export class PortalBannerComponent implements OnInit {
     {name: 'Theme', id: '4'},
   ];
 
+  constructor(
+    private readonly environmentSettings: EnvironmentSettingsService,
+  ) {}
+
   ngOnInit(): void {
     console.log('pageRedirections size: ' + this.pageRedirections.length);
+    this.initialize();
+    this.form.get('bannerType').valueChanges.subscribe(value => {
+      this.onBannerTypeChange(value);
+    });
+  }
+
+  private initialize() {
+    const environment = this.environmentSettings.getSnapshot();
     this.form = new FormGroup<BannerForm>({
-      bannerType: new FormControl<BannerType>(BannerEnum.NONE, [Validators.required]),
-      titleText: new FormControl<string>('', [Validators.required]),
-      subTitleText: new FormControl<string>('', [Validators.required]),
-      primaryButtonText: new FormControl<string>('', [Validators.required]),
-      primaryButtonRedirection: new FormControl<string[]>([]),
-      primaryButtonEnabled: new FormControl<boolean>(false),
-      secondaryButtonText: new FormControl<string>('Explore APIs', [Validators.required]),
-      secondaryButtonEnabled: new FormControl<boolean>(false),
-      secondaryButtonRedirection: new FormControl<string[]>([]),
+      enabled: new FormControl<boolean>(environment.portalNext.banner.enabled, [Validators.required]),
+      titleText: new FormControl<string>(environment.portalNext.banner.title, [Validators.required]),
+      subTitleText: new FormControl<string>(environment.portalNext.banner.subtitle, [Validators.required]),
     });
   }
 
   reset() {
-    this.form.reset({
-      bannerType: BannerEnum.NONE,
-    });
+    this.form.reset();
+    this.initialize();
+
   }
 
   submit() {
-    // console.log("Form submitted 🚀");
+    console.log("Form submitted 🚀");
   }
 
+  onBannerTypeChange(value: string) {
+    this.form.get('enabled').setValue(value === 'None');
+  }
   protected readonly of = of;
 }

@@ -26,15 +26,20 @@
         class="status__radio-group"
         aria-label="Select a status"
         formControlName="bannerType"
+        (change)="onBannerTypeChange($event.value)"
       >
-        @for (bannerType of bannerTypes; track bannerType) {
-          <mat-radio-button class="status__radio-group__button" [value]="bannerType">
-            {{ bannerType }}
-          </mat-radio-button>
-        }
+        <mat-radio-button class="status__radio-group__button" value="None">
+          None
+        </mat-radio-button>
+        <mat-radio-button class="status__radio-group__button" value="Featured Banner">
+          Featured banner
+        </mat-radio-button>
       </mat-radio-group>
 
-      @if (form.controls.bannerType.value === 'Featured banner') {
+
+      @if (form.controls.enabled.value) {
+        <img class="card__header__logo" src="/assets/banner-featured.svg" alt="Gravitee.io" />
+
         <div>
           <div class="header-row">
             <h3 class="header__title">Information</h3>
@@ -62,67 +67,8 @@
             </mat-form-field>
           </div>
         </div>
-        <div>
-          <div class="header-row">
-            <h3 class="header__title">Primary button</h3>
-            <gio-form-slide-toggle>
-              <gio-form-label>Display in the banner</gio-form-label>
-              <mat-slide-toggle
-                gioFormSlideToggle
-                formControlName="primaryButtonEnabled"
-                aria-label="Display in the banner"
-                name="primaryButtonEnabled"
-              ></mat-slide-toggle>
-            </gio-form-slide-toggle>
-          </div>
-          <div class="button-row">
-            <mat-form-field class="button">
-              <mat-label>Button Text</mat-label>
-              <input type="text" matInput aria-label="Logging configuration condition"
-                     formControlName="primaryButtonText"/>
-              <mat-error *ngIf="form.controls.primaryButtonText?.errors?.required">Button text is required</mat-error>
-            </mat-form-field>
-            <mat-form-field class="button">
-              <mat-label>Page Redirection</mat-label>
-              <mat-select formControlName="primaryButtonRedirection" multiple>
-                @for (pageRedirection of pageRedirections; track pageRedirection.id) {
-                  <mat-option [value]="pageRedirection.id">{{ pageRedirection.name }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <div>
-          <div class="header-row">
-            <h3 class="header__title">Secondary button</h3>
-            <gio-form-slide-toggle>
-              <gio-form-label>Display in the banner</gio-form-label>
-              <mat-slide-toggle
-                gioFormSlideToggle
-                formControlName="secondaryButtonEnabled"
-                aria-label="Display in the banner"
-                name="secondaryButtonEnabled"
-              ></mat-slide-toggle>
-            </gio-form-slide-toggle>
-          </div>
-          <div class="button-row">
-            <mat-form-field class="button">
-              <mat-label>Secondary Text</mat-label>
-              <input type="text" matInput aria-label="Logging configuration condition"
-                     formControlName="secondaryButtonText"/>
-              <mat-error *ngIf="form.controls.secondaryButtonText?.errors?.required">Secondary text is required
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field class="button">
-              <mat-label>Page Redirection</mat-label>
-              <mat-select formControlName="secondaryButtonRedirection" multiple>
-                @for (pageRedirection of pageRedirections; track pageRedirection.id) {
-                  <mat-option [value]="pageRedirection.id">{{ pageRedirection.name }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
+      } @else {
+        <img class="card__header__logo" src="/assets/banner-none.svg" alt="Gravitee.io" />
       }
     </form>
   </mat-card-content>

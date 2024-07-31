@@ -192,6 +192,7 @@ export interface EnvSettings {
     access: {
       enabled: boolean;
     };
+    banner: Banner;
   };
   reCaptcha: {
     enabled: boolean;
@@ -201,4 +202,10 @@ export interface EnvSettings {
     tasks: number;
     notifications: number;
   };
+}
+
+export interface Banner {
+  title: string;
+  subtitle: string;
+  enabled: boolean;
 }
