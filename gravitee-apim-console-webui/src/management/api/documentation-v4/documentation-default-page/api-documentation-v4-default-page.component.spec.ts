@@ -126,7 +126,7 @@ describe('ApiDocumentationV4DefaultPageComponent', () => {
       expect(await createNewPageBtn.isDisabled()).toEqual(false);
       await headerHarness.clickCreateNewPage(PageType.MARKDOWN);
 
-      expect(routerNavigateSpy).toHaveBeenCalledWith(['.', 'new'], {
+      expect(routerNavigateSpy).toHaveBeenCalledWith(['.', 'homepage', 'new'], {
         relativeTo: expect.anything(),
         queryParams: { parentId: 'ROOT', pageType: 'MARKDOWN', homepage: true },
       });

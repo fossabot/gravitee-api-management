@@ -267,6 +267,7 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
     this.createPage()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
+        this.snackBarService.success('Page created successfully');
         this.goBackToPageList();
       });
   }
@@ -279,6 +280,7 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: () => {
+          this.snackBarService.success('Page created and published successfully');
           this.goBackToPageList();
         },
         error: (error) => {
@@ -292,6 +294,7 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
+          this.snackBarService.success('Page updated successfully');
           this.goBackToPageList();
         },
       });
@@ -305,6 +308,8 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: () => {
+          this.snackBarService.success('Page updated and published successfully');
+
           this.goBackToPageList();
         },
         error: (error) => {
@@ -357,7 +362,7 @@ export class DocumentationEditPageComponent implements OnInit, OnDestroy {
   }
 
   goBackToPageList() {
-    this.router.navigate(['../'], {
+    this.router.navigate(['../../'], {
       relativeTo: this.activatedRoute,
       queryParams: { parentId: this.getParentId() },
     });

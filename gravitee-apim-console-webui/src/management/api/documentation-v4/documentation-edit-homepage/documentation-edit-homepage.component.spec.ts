@@ -129,7 +129,7 @@ describe('DocumentationEditHomepageComponent', () => {
 
   describe('Homepage', () => {
     beforeEach(async () => {
-      await init(undefined, PAGE.id);
+      await init(undefined, undefined);
       const editPage = await harnessLoader.getHarness(DocumentationEditPageHarness);
       await editPage.setName('New page');
       await editPage.checkVisibility('PUBLIC');
@@ -145,10 +145,9 @@ describe('DocumentationEditHomepageComponent', () => {
       });
     });
     it('should save content', async () => {
-      initPageServiceRequests({ pages: [PAGE], breadcrumb: [], parentId: undefined, mode: 'edit' }, PAGE);
+      initPageServiceRequests({ pages: [PAGE], breadcrumb: [], parentId: undefined, mode: 'create' }, PAGE);
       const editor = await harnessLoader.getHarness(GioMonacoEditorHarness);
       await editor.setValue('#TITLE \n This is the file content');
-
       const saveBtn = await harnessLoader.getHarness(MatButtonHarness.with({ text: 'Save' }));
       expect(await saveBtn.isDisabled()).toEqual(false);
       await saveBtn.click();
@@ -165,8 +164,8 @@ describe('DocumentationEditHomepageComponent', () => {
         visibility: 'PUBLIC',
         content: '#TITLE  This is the file content',
         parentId: 'ROOT',
-        accessControls: [{ referenceId: 'group-1', referenceType: 'GROUP' }],
-        excludedAccessControls: true,
+        accessControls: [],
+        excludedAccessControls: false,
         homepage: true,
       });
     });

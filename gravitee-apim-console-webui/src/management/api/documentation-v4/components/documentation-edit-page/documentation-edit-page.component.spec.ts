@@ -863,7 +863,7 @@ describe('DocumentationEditPageComponent', () => {
           });
           req.flush(PAGE);
 
-          expect(routerNavigateSpy).toHaveBeenCalledWith(['../'], {
+          expect(routerNavigateSpy).toHaveBeenCalledWith(['../../'], {
             relativeTo: expect.anything(),
             queryParams: { parentId: 'ROOT' },
           });
@@ -908,7 +908,7 @@ describe('DocumentationEditPageComponent', () => {
           });
           req.flush(PAGE);
 
-          expect(routerNavigateSpy).toHaveBeenCalledWith(['../'], {
+          expect(routerNavigateSpy).toHaveBeenCalledWith(['../../'], {
             relativeTo: expect.anything(),
             queryParams: { parentId: 'ROOT' },
           });
@@ -1142,7 +1142,7 @@ describe('DocumentationEditPageComponent', () => {
             })
             .flush(null);
 
-          expect(routerNavigateSpy).toHaveBeenCalledWith(['../'], {
+          expect(routerNavigateSpy).toHaveBeenCalledWith(['../../'], {
             relativeTo: expect.anything(),
             queryParams: { parentId: 'ROOT' },
           });
@@ -1192,7 +1192,7 @@ describe('DocumentationEditPageComponent', () => {
             })
             .flush(null);
 
-          expect(routerNavigateSpy).toHaveBeenCalledWith(['../'], {
+          expect(routerNavigateSpy).toHaveBeenCalledWith(['../../'], {
             relativeTo: expect.anything(),
             queryParams: { parentId: FOLDER.id },
           });
