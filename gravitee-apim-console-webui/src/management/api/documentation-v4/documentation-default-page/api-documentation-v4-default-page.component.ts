@@ -76,14 +76,14 @@ export class ApiDocumentationV4DefaultPageComponent implements OnInit, OnDestroy
   }
 
   addPage(pageType: PageType) {
-    this.router.navigate(['.', 'new'], {
+    this.router.navigate(['.', 'homepage', 'new'], {
       relativeTo: this.activatedRoute,
       queryParams: { parentId: this.parentId, pageType, homepage: true },
     });
   }
 
   editPage(pageId: string) {
-    this.router.navigate([pageId], {
+    this.router.navigate(['homepage/' + pageId], {
       relativeTo: this.activatedRoute,
     });
   }
