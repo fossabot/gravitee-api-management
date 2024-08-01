@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-import { PortalBannerComponent } from './portal-banner.component';
-import { PortalBannerHarness } from './portal-banner.harness';
-import {HttpTestingController} from "@angular/common/http/testing";
+import {PortalBannerComponent} from './portal-banner.component';
+import {PortalBannerHarness} from './portal-banner.harness';
+import {HttpTestingController} from '@angular/common/http/testing';
 import {PortalSettingsService} from "../../../services-ngx/portal-settings.service";
 import {fakePortalSettings} from "../../../entities/portal/portalSettings.fixture";
-import {CONSTANTS_TESTING} from "../../../shared/testing";
+import {CONSTANTS_TESTING, GioTestingModule} from "../../../shared/testing";
 
 describe('DeveloperPortalBannerComponent', () => {
   // let component: DeveloperPortalBannerComponent;
@@ -33,7 +33,7 @@ describe('DeveloperPortalBannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, PortalBannerComponent],
+      imports: [GioTestingModule, NoopAnimationsModule, PortalBannerComponent],
     }).compileComponents();
 
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -55,10 +55,13 @@ describe('DeveloperPortalBannerComponent', () => {
         done();
       });
 
-      httpTestingController.expectOne({
+      const requests = httpTestingController.match({
         method: 'GET',
         url: `${CONSTANTS_TESTING.env.baseURL}/settings`
-      }).flush(portalSettingsToGet);
+      });
+
+      expect(requests.length).toBe(2);
+      requests.forEach(req => req.flush(portalSettingsToGet));
     });
   });
 
