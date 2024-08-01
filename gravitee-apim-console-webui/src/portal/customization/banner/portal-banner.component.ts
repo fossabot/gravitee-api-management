@@ -123,5 +123,4 @@ export class PortalBannerComponent implements OnInit {
     this.form.get('enabled').setValue(value);
   }
 
-  protected readonly of = of;
 }
