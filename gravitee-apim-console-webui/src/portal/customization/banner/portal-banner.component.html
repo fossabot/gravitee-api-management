@@ -21,55 +21,82 @@
   </mat-card-header>
 
   <mat-card-content>
-    <form *ngIf="form" [formGroup]="form">
-      <mat-radio-group
-        class="status__radio-group"
-        aria-label="Select a status"
-        formControlName="enabled"
-        (change)="onBannerTypeChange($event.value)"
-      >
-        <mat-radio-button class="status__radio-group__button" [value]="false">
-          None
-        </mat-radio-button>
-        <mat-radio-button class="status__radio-group__button" [value]="true">
-          Featured banner
-        </mat-radio-button>
-      </mat-radio-group>
+    @if (form) {
+      <form [formGroup]="form" class="developer-portal-banner__container">
+        <div class="developer-portal-banner__row-one">
+          <mat-radio-group
+            class="developer-portal-banner__row-one__radio-group"
+            aria-label="Select a status"
+            formControlName="enabled"
+            (change)="onBannerTypeChange($event.value)"
+          >
+            <banner-radio-button title="None" subtitle="No banner will be shown on the catalog page" [value]="false" [selected]="form.controls.enabled.value === false" [disabled]="false" (bannerOptionSelected)="onBannerTypeChange($event)">
 
-      @if (form.controls.enabled.value) {
-        <img class="card__header__logo" src="/assets/banner-featured.svg" alt="Gravitee.io" />
+            </banner-radio-button>
 
-        <div>
-          <div class="header-row">
-            <h3 class="header__title">Information</h3>
-          </div>
+            <banner-radio-button title="Featured banner" subtitle="Feature your own message and actions in the catalog page" [value]="true" [selected]="form.controls.enabled.value === true" [disabled]="false " (bannerOptionSelected)="onBannerTypeChange($event)">
+
+            </banner-radio-button>
+<!--            <mat-radio-button labelPosition="before" class="developer-portal-banner__row-one__radio-group__button" [value]="false" [class.selected]="form.controls.enabled.value === false">-->
+<!--              <div class="developer-portal-banner__row-one__radio-group__button__content">-->
+<!--                <h4>None</h4>-->
+<!--                <div>No banner will be shown on the catalog page</div>-->
+<!--              </div>-->
+<!--            </mat-radio-button>-->
+<!--            <mat-radio-button labelPosition="before" class="developer-portal-banner__row-one__radio-group__button" [value]="true" [class.selected]="form.controls.enabled.value === true">-->
+<!--              <div class="developer-portal-banner__row-one__radio-group__button__content">-->
+<!--                <h4>Featured banner</h4>-->
+<!--                <div>Feature your own message and actions in the catalog page</div>-->
+<!--              </div>-->
+
+<!--            </mat-radio-button>-->
+          </mat-radio-group>
+          @if (form.controls.enabled.value) {
+          <img class="card__header__logo" ngSrc="/assets/banner-featured.svg" alt="Gravitee.io" height="305"
+               width="400"/>
+          } @else {
+      <img class="card__header__logo" ngSrc="/assets/banner-none.svg" alt="Gravitee.io" height="305" width="400"/>
+    }
+        </div>
+        @if (form.controls.enabled.value) {
+        <div class="developer-portal-banner__row-two">
           <div>
-            <mat-form-field class="input_text">
-              <mat-label>Title Text</mat-label>
-              <input type="text" maxlength="150" matInput aria-label="Logging configuration condition" formControlName="titleText"/>
-              <mat-error *ngIf="form.controls.titleText?.errors?.required">Title is required</mat-error>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="input_text">
-              <mat-label>Subtitle Text</mat-label>
-              <input
-                type="text"
-                #input
-                maxlength="250"
-                matInput
-                aria-label="Logging configuration condition"
-                formControlName="subTitleText"
-              />
-              <mat-hint>{{ input.value.length }}/250</mat-hint>
-              <mat-error *ngIf="form.controls.subTitleText?.errors?.required">Subtitle is required</mat-error>
-            </mat-form-field>
+            <div class="header-row">
+              <h3 class="header__title">Information</h3>
+            </div>
+            <div>
+              <mat-form-field class="input_text">
+                <mat-label>Title Text</mat-label>
+                <input type="text" maxlength="150" matInput aria-label="Logging configuration condition" formControlName="titleText"/>
+                @if (form.controls.titleText?.errors?.required) {
+                  <mat-error>Title is required</mat-error>
+                }
+
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="input_text">
+                <mat-label>Subtitle Text</mat-label>
+                <input
+                  type="text"
+                  #input
+                  maxlength="250"
+                  matInput
+                  aria-label="Logging configuration condition"
+                  formControlName="subTitleText"
+                />
+                <mat-hint>{{ input.value.length }}/250</mat-hint>
+                @if (form.controls.subTitleText?.errors?.required) {
+                  <mat-error>Subtitle is required</mat-error>
+
+                }
+              </mat-form-field>
+            </div>
           </div>
         </div>
-      } @else {
-        <img class="card__header__logo" src="/assets/banner-none.svg" alt="Gravitee.io" />
-      }
-    </form>
+          }
+      </form>
+    }
   </mat-card-content>
 </mat-card>
 <gio-save-bar [form]="form" (resetClicked)="reset()" (submitted)="submit()"></gio-save-bar>

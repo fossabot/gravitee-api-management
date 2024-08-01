@@ -24,7 +24,7 @@ export class PortalBannerHarness extends ComponentHarness {
   private getTitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=titleText]' }));
   private getSubtitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=subTitleText]' }));
   private getSaveBar = this.locatorFor(GioSaveBarHarness);
-  private getRadioGroup = this.locatorFor(MatRadioGroupHarness.with({ selector: '.status__radio-group' }));
+  private locateBannerRadio = (label: string) => this.locatorFor(MatRadioButtonHarness.with({label }))();
 
   public async setTitle(title: string) {
     return this.getTitleInput().then((input) => input.setValue(title));
@@ -42,19 +42,16 @@ export class PortalBannerHarness extends ComponentHarness {
     return this.getSubtitleInput().then((input) => input.getValue());
   }
 
-  public async selectRadio(value: boolean) {
-    const radioGroup = await this.getRadioGroup();
-    const buttons = await radioGroup.getRadioButtons();
-    const targetButton = buttons.find(async (btn) => (await btn.getValue()) === `${value}`);
-    return targetButton?.check();
+  public async enableBanner(): Promise<void> {
+    return await this.locateBannerRadio('Featured banner').then(radio => radio.check());
+  }
+
+  public async disableBanner(): Promise<void> {
+    return await this.locateBannerRadio('None').then(radio => radio.check());
   }
 
   public async submit() {
     return this.getSaveBar().then((saveBar) => saveBar.clickSubmit());
-  }
-
-  public async isSubmitInvalid() {
-    return this.getSaveBar().then((saveBar) => saveBar.isSubmitButtonInvalid());
   }
 
   public reset() {

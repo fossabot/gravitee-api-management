@@ -25,14 +25,16 @@ import {PortalBannerHarness} from './portal-banner.harness';
 import {PortalSettingsService} from "../../../services-ngx/portal-settings.service";
 import {fakePortalSettings} from "../../../entities/portal/portalSettings.fixture";
 import {CONSTANTS_TESTING, GioTestingModule} from "../../../shared/testing";
+import {GioSaveBarHarness} from "@gravitee/ui-particles-angular";
+import { of } from 'rxjs';
 
 describe('DeveloperPortalBannerComponent', () => {
   let fixture: ComponentFixture<PortalBannerComponent>;
   let componentHarness: PortalBannerHarness;
   let httpTestingController: HttpTestingController;
-  let portalSettingsService: PortalSettingsService;
   let harnessLoader: HarnessLoader;
-  let portalSettingsMock;
+
+  const PORTAL_SETTINGS = fakePortalSettings();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -40,7 +42,6 @@ describe('DeveloperPortalBannerComponent', () => {
     }).compileComponents();
 
     httpTestingController = TestBed.inject(HttpTestingController);
-    portalSettingsService = TestBed.inject<PortalSettingsService>(PortalSettingsService);
 
     fixture = TestBed.createComponent(PortalBannerComponent);
     componentHarness = await TestbedHarnessEnvironment.harnessForFixture(fixture, PortalBannerHarness);
@@ -52,70 +53,24 @@ describe('DeveloperPortalBannerComponent', () => {
     httpTestingController.verify();
   });
 
-  const getSettings = (expected: number) => {
-    portalSettingsMock = fakePortalSettings();
-
-    portalSettingsService.get().subscribe((portalSettings) => {
-      expect(portalSettings).toMatchObject(portalSettingsMock);
-    });
-
-    const requests = httpTestingController.match({
+  const getSettings = () => {
+    const requests = httpTestingController.expectOne({
       method: 'GET',
       url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
     });
 
-    expect(requests.length).toBe(expected);
-    requests.forEach((req) => req.flush(portalSettingsMock));
+    requests.flush(PORTAL_SETTINGS)
     fixture.detectChanges();
   };
 
-  describe('get', () => {
-    it('should call the API', (done) => {
-      const portalSettingsMock = fakePortalSettings();
-
-      portalSettingsService.get().subscribe((portalSettings) => {
-        expect(portalSettings).toMatchObject(portalSettingsMock);
-        done();
-      });
-
-      const requests = httpTestingController.match({
-        method: 'GET',
-        url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
-      });
-
-      expect(requests.length).toBe(2);
-      requests.forEach((req) => req.flush(portalSettingsMock));
-    });
-  });
-
-  describe('save', () => {
-    it('should call the API', (done) => {
-      getSettings(2);
-      const portalSettingsToSave = fakePortalSettings();
-
-      portalSettingsService.save(portalSettingsToSave).subscribe(() => {
-        done();
-      });
-
-      const req = httpTestingController.expectOne({
-        method: 'POST',
-        url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
-      });
-      expect(req.request.body).toEqual(portalSettingsToSave);
-
-      req.flush(null);
-      httpTestingController.expectOne({method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal`}).flush({});
-    });
-  });
-
   it('should render None radio button selected and not render featured banner elements', async () => {
-    getSettings(2);
-    await componentHarness.selectRadio(false);
+    getSettings();
+    await componentHarness.disableBanner();
     fixture.detectChanges();
 
-    const saveBtn = await harnessLoader.getHarness(MatButtonHarness.with({text: 'Save'}));
-    expect(await saveBtn.isDisabled()).toEqual(false);
-    await saveBtn.click();
+    const saveBar = await harnessLoader.getHarness(GioSaveBarHarness);
+    expect(await saveBar.isSubmitButtonInvalid()).toEqual(false);
+    await saveBar.clickSubmit();
 
     const request = httpTestingController.expectOne({
       method: 'POST',
@@ -124,9 +79,9 @@ describe('DeveloperPortalBannerComponent', () => {
 
     request.flush({});
     expect(request.request.body).toEqual({
-      ...portalSettingsMock,
+      ...PORTAL_SETTINGS,
       portalNext: {
-        ...portalSettingsMock.portalNext,
+        ...PORTAL_SETTINGS.portalNext,
         bannerConfigEnabled: false,
       },
     });
@@ -134,15 +89,15 @@ describe('DeveloperPortalBannerComponent', () => {
     httpTestingController.expectOne({
       method: 'GET',
       url: `${CONSTANTS_TESTING.env.baseURL}/settings`
-    }).flush(portalSettingsMock);
+    }).flush(PORTAL_SETTINGS);
   });
 
   it('should render Featured banner radio button selected and render featured banner elements', async () => {
     let testTitle = 'Test Title';
     let testSubtitle = 'Test Subtitle';
 
-    getSettings(2);
-    await componentHarness.selectRadio(true);
+    getSettings();
+    await componentHarness.enableBanner();
     fixture.detectChanges();
 
     await componentHarness.setTitle(testTitle);
@@ -154,9 +109,9 @@ describe('DeveloperPortalBannerComponent', () => {
     expect(title).toBe(testTitle);
     expect(subtitle).toBe(testSubtitle);
 
-    const saveBtn = await harnessLoader.getHarness(MatButtonHarness.with({text: 'Save'}));
-    expect(await saveBtn.isDisabled()).toEqual(false);
-    await saveBtn.click();
+    const saveBar = await harnessLoader.getHarness(GioSaveBarHarness);
+    expect(await saveBar.isSubmitButtonInvalid()).toEqual(false);
+    await saveBar.clickSubmit();
 
     const request = httpTestingController.expectOne({
       method: 'POST',
@@ -165,9 +120,9 @@ describe('DeveloperPortalBannerComponent', () => {
 
     request.flush({});
     expect(request.request.body).toEqual({
-      ...portalSettingsMock,
+      ...PORTAL_SETTINGS,
       portalNext: {
-        ...portalSettingsMock.portalNext,
+        ...PORTAL_SETTINGS.portalNext,
         bannerConfigEnabled: true,
         bannerConfigTitle: testTitle,
         bannerConfigSubtitle: testSubtitle,
@@ -177,7 +132,7 @@ describe('DeveloperPortalBannerComponent', () => {
     httpTestingController.expectOne({
       method: 'GET',
       url: `${CONSTANTS_TESTING.env.baseURL}/settings`
-    }).flush(portalSettingsMock);
+    }).flush(PORTAL_SETTINGS);
   });
 });
 

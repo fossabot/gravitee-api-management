@@ -13,6 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+@use '../../../scss/gio-layout' as gio-layout;
+
+:host {
+  @include gio-layout.gio-responsive-content-container;
+}
+
+
 .developer-portal-banner {
   .input_text {
     display: flex;
@@ -68,4 +76,36 @@
       }
     }
   }
+
+  &__container {
+    display: flex;
+    flex-flow: column;
+    gap: 32px;
+  }
+
+  &__row-one {
+    display: flex;
+    gap: 40px;
+
+    &__radio-group {
+      display: flex;
+      flex-flow: column;
+      flex: 1;
+      gap: 24px;
+
+      &__button {
+        border: 1px solid black;
+        border-radius: 8px;
+
+        &__content {
+          padding: 14px 0;
+        }
+      }
+    }
+
+  }
+}
+
+.selected {
+  border: 1px solid purple;
 }

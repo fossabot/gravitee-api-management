@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {ReactiveFormsModule, Validators, FormControl, FormGroup, FormsModule} from '@angular/forms';
@@ -21,17 +21,18 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {GioFormSlideToggleModule, GioSaveBarModule} from '@gravitee/ui-particles-angular';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
-import {combineLatest, of} from 'rxjs';
+import {combineLatest, EMPTY, of} from 'rxjs';
 
 import {GioRoleModule} from '../../../shared/components/gio-role/gio-role.module';
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
-import {tap} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {PortalSettingsService} from "../../../services-ngx/portal-settings.service";
 import {PortalSettings} from "../../../entities/portal/portalSettings";
 import {SnackBarService} from "../../../services-ngx/snack-bar.service";
+import {BannerRadioButtonComponent} from "../../components/banner-radio-button/banner-radio-button.component";
 
 interface BannerForm {
   enabled: FormControl<boolean>;
@@ -58,6 +59,8 @@ interface BannerForm {
     MatSelect,
     GioFormSlideToggleModule,
     MatSlideToggle,
+    NgOptimizedImage,
+    BannerRadioButtonComponent,
   ],
   standalone: true,
 })
@@ -73,9 +76,9 @@ export class PortalBannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    combineLatest([this.portalSettingsService.get()])
+    this.portalSettingsService.get()
       .pipe(
-        tap(([portalSettings]) => {
+        tap((portalSettings) => {
           this.settings = portalSettings;
         }),
         takeUntilDestroyed(this.destroyRef),
@@ -87,7 +90,7 @@ export class PortalBannerComponent implements OnInit {
 
   private initialize() {
     this.form = new FormGroup<BannerForm>({
-      enabled: new FormControl<boolean>(this.settings.portalNext.bannerConfigEnabled, [Validators.required]),
+      enabled: new FormControl<boolean>(this.settings.portalNext.bannerConfigEnabled ?? false, [Validators.required]),
       titleText: new FormControl<string>(this.settings.portalNext.bannerConfigTitle, [Validators.required]),
       subTitleText: new FormControl<string>(this.settings.portalNext.bannerConfigSubtitle, [Validators.required]),
     });
@@ -113,13 +116,19 @@ export class PortalBannerComponent implements OnInit {
       .save(updatedSettingsPayload)
       .pipe(
         tap(() => this.snackBarService.success('Settings successfully updated!')),
+        catchError(() => {
+          this.snackBarService.error('An error occurred during the Settings update');
+          return EMPTY;
+        }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => this.ngOnInit());
   }
 
   onBannerTypeChange(value: boolean) {
-    this.form.get('enabled').setValue(value);
+    console.log(this.form)
+    console.log(this.form.controls.enabled)
+    this.form.controls.enabled.setValue(value);
   }
 
 }
