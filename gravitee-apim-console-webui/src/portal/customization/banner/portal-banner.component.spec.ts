@@ -176,7 +176,7 @@ describe('DeveloperPortalBannerComponent', () => {
     httpTestingController.expectOne({method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal`}).flush({});
     httpTestingController.expectOne({
       method: 'GET',
-      url: `${CONSTANTS_TESTING.env.baseURL}/settings`
+      url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
     }).flush(portalSettingsMock);
   });
 });

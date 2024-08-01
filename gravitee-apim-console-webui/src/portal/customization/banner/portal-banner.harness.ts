@@ -21,8 +21,8 @@ import { GioSaveBarHarness } from '@gravitee/ui-particles-angular';
 export class PortalBannerHarness extends ComponentHarness {
   static readonly hostSelector = 'portal-banner';
 
-  private getTitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=titleText]' }));
-  private getSubtitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=subTitleText]' }));
+   getTitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=titleText]' }));
+   getSubtitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=subTitleText]' }));
   private getSaveBar = this.locatorFor(GioSaveBarHarness);
   private getRadioGroup = this.locatorFor(MatRadioGroupHarness.with({ selector: '.status__radio-group' }));
 
@@ -46,7 +46,7 @@ export class PortalBannerHarness extends ComponentHarness {
     const radioGroup = await this.getRadioGroup();
     const buttons = await radioGroup.getRadioButtons();
     const targetButton = buttons.find(async (btn) => (await btn.getValue()) === `${value}`);
-    return targetButton?.check();
+    return targetButton.check();
   }
 
   public async submit() {
