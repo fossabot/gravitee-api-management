@@ -15,20 +15,38 @@
  */
 import { ComponentHarness } from '@angular/cdk/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
 import { GioSaveBarHarness } from '@gravitee/ui-particles-angular';
 
 export class PortalBannerHarness extends ComponentHarness {
   static readonly hostSelector = 'portal-banner';
 
-  private getNameInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=name]' }));
+  private getTitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=titleText]' }));
+  private getSubtitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=subTitleText]' }));
   private getSaveBar = this.locatorFor(GioSaveBarHarness);
+  private getRadioGroup = this.locatorFor(MatRadioGroupHarness.with({ selector: '.status__radio-group' }));
 
-  public async setName(name: string) {
-    return this.getNameInput().then((input) => input.setValue(name));
+  public async setTitle(title: string) {
+    return this.getTitleInput().then((input) => input.setValue(title));
   }
 
-  public async getName() {
-    return this.getNameInput().then((input) => input.getValue());
+  public async getTitle() {
+    return this.getTitleInput().then((input) => input.getValue());
+  }
+
+  public async setSubtitle(subtitle: string) {
+    return this.getSubtitleInput().then((input) => input.setValue(subtitle));
+  }
+
+  public async getSubtitle() {
+    return this.getSubtitleInput().then((input) => input.getValue());
+  }
+
+  public async selectRadio(value: boolean) {
+    const radioGroup = await this.getRadioGroup();
+    const buttons = await radioGroup.getRadioButtons();
+    const targetButton = buttons.find(async (btn) => (await btn.getValue()) === `${value}`);
+    return targetButton?.check();
   }
 
   public async submit() {

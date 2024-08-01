@@ -81,7 +81,6 @@ export class PortalBannerComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
-        console.log("Data is fetch: ", this.settings);
         this.initialize();
       });
   }

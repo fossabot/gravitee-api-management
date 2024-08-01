@@ -16,20 +16,23 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpTestingController} from '@angular/common/http/testing';
+import {MatButtonHarness} from "@angular/material/button/testing";
+import {HarnessLoader} from "@angular/cdk/testing";
 
 import {PortalBannerComponent} from './portal-banner.component';
 import {PortalBannerHarness} from './portal-banner.harness';
-import {HttpTestingController} from '@angular/common/http/testing';
 import {PortalSettingsService} from "../../../services-ngx/portal-settings.service";
 import {fakePortalSettings} from "../../../entities/portal/portalSettings.fixture";
 import {CONSTANTS_TESTING, GioTestingModule} from "../../../shared/testing";
 
 describe('DeveloperPortalBannerComponent', () => {
-  // let component: DeveloperPortalBannerComponent;
   let fixture: ComponentFixture<PortalBannerComponent>;
   let componentHarness: PortalBannerHarness;
   let httpTestingController: HttpTestingController;
   let portalSettingsService: PortalSettingsService;
+  let harnessLoader: HarnessLoader;
+  let portalSettingsMock;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -39,41 +42,65 @@ describe('DeveloperPortalBannerComponent', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
     portalSettingsService = TestBed.inject<PortalSettingsService>(PortalSettingsService);
 
-
     fixture = TestBed.createComponent(PortalBannerComponent);
-    // component = fixture.componentInstance;
     componentHarness = await TestbedHarnessEnvironment.harnessForFixture(fixture, PortalBannerHarness);
+    harnessLoader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+
+  const getSettings = (expected: number) => {
+    portalSettingsMock = fakePortalSettings();
+
+    portalSettingsService.get().subscribe((portalSettings) => {
+      expect(portalSettings).toMatchObject(portalSettingsMock);
+    });
+
+    const requests = httpTestingController.match({
+      method: 'GET',
+      url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
+    });
+
+    expect(requests.length).toBe(expected);
+    requests.forEach((req) => req.flush(portalSettingsMock));
+    fixture.detectChanges();
+  };
+
   describe('get', () => {
     it('should call the API', (done) => {
-      const portalSettingsToGet = fakePortalSettings();
+      const portalSettingsMock = fakePortalSettings();
 
       portalSettingsService.get().subscribe((portalSettings) => {
-        expect(portalSettings).toMatchObject(portalSettingsToGet);
+        expect(portalSettings).toMatchObject(portalSettingsMock);
         done();
       });
 
       const requests = httpTestingController.match({
         method: 'GET',
-        url: `${CONSTANTS_TESTING.env.baseURL}/settings`
+        url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
       });
 
       expect(requests.length).toBe(2);
-      requests.forEach(req => req.flush(portalSettingsToGet));
+      requests.forEach((req) => req.flush(portalSettingsMock));
     });
   });
 
   describe('save', () => {
     it('should call the API', (done) => {
+      getSettings(2);
       const portalSettingsToSave = fakePortalSettings();
 
       portalSettingsService.save(portalSettingsToSave).subscribe(() => {
         done();
       });
 
-      const req = httpTestingController.expectOne({method: 'POST', url: `${CONSTANTS_TESTING.env.baseURL}/settings`});
+      const req = httpTestingController.expectOne({
+        method: 'POST',
+        url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
+      });
       expect(req.request.body).toEqual(portalSettingsToSave);
 
       req.flush(null);
@@ -81,19 +108,65 @@ describe('DeveloperPortalBannerComponent', () => {
     });
   });
 
-  // it('should fill form and submit', async () => {
-  //   await componentHarness.setName('name');
-  //   await componentHarness.reset();
-  //   expect(await componentHarness.getName()).toStrictEqual('');
-  //
-  //   await componentHarness.setName('name');
-  //   await componentHarness.submit();
-  //   expect(await componentHarness.getName()).toStrictEqual('name');
-  // });
-  //
-  // it('should not be able to save', async () => {
-  //   await componentHarness.setName('name');
-  //   await componentHarness.setName(null);
-  //   expect(await componentHarness.isSubmitInvalid()).toBeTruthy();
-  // });
+  it('should render None radio button selected and not render featured banner elements', async () => {
+    getSettings(2);
+    await componentHarness.selectRadio(false);
+    fixture.detectChanges();
+
+    const saveBtn = await harnessLoader.getHarness(MatButtonHarness.with({text: 'Save'}));
+    expect(await saveBtn.isDisabled()).toEqual(false);
+    await saveBtn.click();
+
+    const request = httpTestingController.expectOne({
+      method: 'POST',
+      url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
+    });
+
+    request.flush({});
+    expect(request.request.body).toEqual({
+      ...portalSettingsMock,
+      portalNext: {
+        ...portalSettingsMock.portalNext,
+        bannerConfigEnabled: false,
+      },
+    });
+    httpTestingController.expectOne({method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal`}).flush({});
+    httpTestingController.expectOne({
+      method: 'GET',
+      url: `${CONSTANTS_TESTING.env.baseURL}/settings`
+    }).flush(portalSettingsMock);
+  });
+
+  it('should render Featured banner radio button selected and render featured banner elements', async () => {
+    await componentHarness.selectRadio(true);
+
+    await componentHarness.setTitle('Test Title');
+    await componentHarness.setSubtitle('Test Subtitle');
+
+    const title = await componentHarness.getTitle();
+    const subtitle = await componentHarness.getSubtitle();
+
+    expect(title).toBe('Test Title');
+    expect(subtitle).toBe('Test Subtitle');
+
+    await componentHarness.submit();
+
+    const request = httpTestingController.expectOne({
+      method: 'POST',
+      url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
+    });
+
+    request.flush({});
+    expect(request.request.body).toEqual({
+      portalNext: {
+        access: {
+          enabled: true,
+        },
+        bannerConfigEnabled: true,
+        bannerConfigTitle: 'Test Title',
+        bannerConfigSubtitle: 'Test Subtitle',
+      },
+    });
+  });
 });
+
