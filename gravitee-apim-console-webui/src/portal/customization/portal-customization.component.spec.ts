@@ -17,59 +17,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PortalCustomizationComponent } from './portal-customization.component';
 
-import {CONSTANTS_TESTING, GioTestingModule} from '../../shared/testing';
-import {HttpTestingController} from "@angular/common/http/testing";
-import {PortalSettingsService} from "../../services-ngx/portal-settings.service";
-import {fakePortalSettings} from "../../entities/portal/portalSettings.fixture";
+import { GioTestingModule } from '../../shared/testing';
 
 describe('PortalCustomizationComponent', () => {
   let component: PortalCustomizationComponent;
   let fixture: ComponentFixture<PortalCustomizationComponent>;
-  let httpTestingController: HttpTestingController;
-  let portalSettingsService: PortalSettingsService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PortalCustomizationComponent, GioTestingModule],
     }).compileComponents();
 
-    httpTestingController = TestBed.inject(HttpTestingController);
-    portalSettingsService = TestBed.inject<PortalSettingsService>(PortalSettingsService);
-
     fixture = TestBed.createComponent(PortalCustomizationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-
-
-  describe('get', () => {
-    it('should call the API', (done) => {
-      const portalSettingsToGet = fakePortalSettings();
-
-      portalSettingsService.get().subscribe((portalSettings) => {
-        expect(portalSettings).toMatchObject(portalSettingsToGet);
-        done();
-      });
-
-      httpTestingController.expectOne({ method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/settings` }).flush(portalSettingsToGet);
-    });
-  });
-
-  describe('save', () => {
-    it('should call the API', (done) => {
-      const portalSettingsToSave = fakePortalSettings();
-
-      portalSettingsService.save(portalSettingsToSave).subscribe(() => {
-        done();
-      });
-
-      const req = httpTestingController.expectOne({ method: 'POST', url: `${CONSTANTS_TESTING.env.baseURL}/settings` });
-      expect(req.request.body).toEqual(portalSettingsToSave);
-
-      req.flush(null);
-      httpTestingController.expectOne({ method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal` }).flush({});
-    });
   });
 
   it('should create', () => {

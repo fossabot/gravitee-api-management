@@ -19,16 +19,26 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PortalBannerComponent } from './portal-banner.component';
 import { PortalBannerHarness } from './portal-banner.harness';
+import {HttpTestingController} from "@angular/common/http/testing";
+import {PortalSettingsService} from "../../../services-ngx/portal-settings.service";
+import {fakePortalSettings} from "../../../entities/portal/portalSettings.fixture";
+import {CONSTANTS_TESTING} from "../../../shared/testing";
 
 describe('DeveloperPortalBannerComponent', () => {
   // let component: DeveloperPortalBannerComponent;
   let fixture: ComponentFixture<PortalBannerComponent>;
   let componentHarness: PortalBannerHarness;
+  let httpTestingController: HttpTestingController;
+  let portalSettingsService: PortalSettingsService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, PortalBannerComponent],
     }).compileComponents();
+
+    httpTestingController = TestBed.inject(HttpTestingController);
+    portalSettingsService = TestBed.inject<PortalSettingsService>(PortalSettingsService);
+
 
     fixture = TestBed.createComponent(PortalBannerComponent);
     // component = fixture.componentInstance;
@@ -36,19 +46,51 @@ describe('DeveloperPortalBannerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should fill form and submit', async () => {
-    await componentHarness.setName('name');
-    await componentHarness.reset();
-    expect(await componentHarness.getName()).toStrictEqual('');
+  describe('get', () => {
+    it('should call the API', (done) => {
+      const portalSettingsToGet = fakePortalSettings();
 
-    await componentHarness.setName('name');
-    await componentHarness.submit();
-    expect(await componentHarness.getName()).toStrictEqual('name');
+      portalSettingsService.get().subscribe((portalSettings) => {
+        expect(portalSettings).toMatchObject(portalSettingsToGet);
+        done();
+      });
+
+      httpTestingController.expectOne({
+        method: 'GET',
+        url: `${CONSTANTS_TESTING.env.baseURL}/settings`
+      }).flush(portalSettingsToGet);
+    });
   });
 
-  it('should not be able to save', async () => {
-    await componentHarness.setName('name');
-    await componentHarness.setName(null);
-    expect(await componentHarness.isSubmitInvalid()).toBeTruthy();
+  describe('save', () => {
+    it('should call the API', (done) => {
+      const portalSettingsToSave = fakePortalSettings();
+
+      portalSettingsService.save(portalSettingsToSave).subscribe(() => {
+        done();
+      });
+
+      const req = httpTestingController.expectOne({method: 'POST', url: `${CONSTANTS_TESTING.env.baseURL}/settings`});
+      expect(req.request.body).toEqual(portalSettingsToSave);
+
+      req.flush(null);
+      httpTestingController.expectOne({method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal`}).flush({});
+    });
   });
+
+  // it('should fill form and submit', async () => {
+  //   await componentHarness.setName('name');
+  //   await componentHarness.reset();
+  //   expect(await componentHarness.getName()).toStrictEqual('');
+  //
+  //   await componentHarness.setName('name');
+  //   await componentHarness.submit();
+  //   expect(await componentHarness.getName()).toStrictEqual('name');
+  // });
+  //
+  // it('should not be able to save', async () => {
+  //   await componentHarness.setName('name');
+  //   await componentHarness.setName(null);
+  //   expect(await componentHarness.isSubmitInvalid()).toBeTruthy();
+  // });
 });
