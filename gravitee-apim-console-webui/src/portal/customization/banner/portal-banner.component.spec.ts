@@ -138,18 +138,25 @@ describe('DeveloperPortalBannerComponent', () => {
   });
 
   it('should render Featured banner radio button selected and render featured banner elements', async () => {
-    await componentHarness.selectRadio(true);
+    let testTitle = 'Test Title';
+    let testSubtitle = 'Test Subtitle';
 
-    await componentHarness.setTitle('Test Title');
-    await componentHarness.setSubtitle('Test Subtitle');
+    getSettings(2);
+    await componentHarness.selectRadio(true);
+    fixture.detectChanges();
+
+    await componentHarness.setTitle(testTitle);
+    await componentHarness.setSubtitle(testSubtitle);
 
     const title = await componentHarness.getTitle();
     const subtitle = await componentHarness.getSubtitle();
 
-    expect(title).toBe('Test Title');
-    expect(subtitle).toBe('Test Subtitle');
+    expect(title).toBe(testTitle);
+    expect(subtitle).toBe(testSubtitle);
 
-    await componentHarness.submit();
+    const saveBtn = await harnessLoader.getHarness(MatButtonHarness.with({text: 'Save'}));
+    expect(await saveBtn.isDisabled()).toEqual(false);
+    await saveBtn.click();
 
     const request = httpTestingController.expectOne({
       method: 'POST',
@@ -158,15 +165,19 @@ describe('DeveloperPortalBannerComponent', () => {
 
     request.flush({});
     expect(request.request.body).toEqual({
+      ...portalSettingsMock,
       portalNext: {
-        access: {
-          enabled: true,
-        },
+        ...portalSettingsMock.portalNext,
         bannerConfigEnabled: true,
-        bannerConfigTitle: 'Test Title',
-        bannerConfigSubtitle: 'Test Subtitle',
+        bannerConfigTitle: testTitle,
+        bannerConfigSubtitle: testSubtitle,
       },
     });
+    httpTestingController.expectOne({method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal`}).flush({});
+    httpTestingController.expectOne({
+      method: 'GET',
+      url: `${CONSTANTS_TESTING.env.baseURL}/settings`
+    }).flush(portalSettingsMock);
   });
 });
 
