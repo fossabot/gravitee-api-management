@@ -17,6 +17,7 @@ import { ComponentHarness } from '@angular/cdk/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
 import { GioSaveBarHarness } from '@gravitee/ui-particles-angular';
+import {BannerRadioButtonHarness} from "../../components/banner-radio-button/banner-radio-button.harness";
 
 export class PortalBannerHarness extends ComponentHarness {
   static readonly hostSelector = 'portal-banner';
@@ -24,7 +25,7 @@ export class PortalBannerHarness extends ComponentHarness {
   private getTitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=titleText]' }));
   private getSubtitleInput = this.locatorFor(MatInputHarness.with({ selector: '[formControlName=subTitleText]' }));
   private getSaveBar = this.locatorFor(GioSaveBarHarness);
-  private locateBannerRadio = (label: string) => this.locatorFor(MatRadioButtonHarness.with({label }))();
+  private locateBannerRadio = (title: string) => this.locatorFor(BannerRadioButtonHarness.with({title}))();
 
   public async setTitle(title: string) {
     return this.getTitleInput().then((input) => input.setValue(title));
@@ -43,11 +44,11 @@ export class PortalBannerHarness extends ComponentHarness {
   }
 
   public async enableBanner(): Promise<void> {
-    return await this.locateBannerRadio('Featured banner').then(radio => radio.check());
+    return await this.locateBannerRadio('Featured banner').then(bannerRadio => bannerRadio.getRadioButton()).then(radio => radio.check());
   }
 
   public async disableBanner(): Promise<void> {
-    return await this.locateBannerRadio('None').then(radio => radio.check());
+    return await this.locateBannerRadio('None').then(bannerRadio => bannerRadio.getRadioButton()).then(radio => radio.check());
   }
 
   public async submit() {

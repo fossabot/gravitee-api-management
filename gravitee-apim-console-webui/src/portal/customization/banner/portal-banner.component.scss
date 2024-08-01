@@ -15,7 +15,8 @@
  */
 
 @use '../../../scss/gio-layout' as gio-layout;
-
+@use '@angular/material' as mat;
+@use '@gravitee/ui-particles-angular' as gio;
 :host {
   @include gio-layout.gio-responsive-content-container;
 }
@@ -92,20 +93,11 @@
       flex-flow: column;
       flex: 1;
       gap: 24px;
-
-      &__button {
-        border: 1px solid black;
-        border-radius: 8px;
-
-        &__content {
-          padding: 14px 0;
-        }
-      }
     }
-
   }
 }
 
 .selected {
-  border: 1px solid purple;
+  border: 2px solid mat.get-color-from-palette(gio.$mat-accent-palette, 'default') !important;
+  color: mat.get-color-from-palette(gio.$mat-accent-palette, 'default');
 }

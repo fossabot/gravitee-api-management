@@ -1,11 +1,13 @@
-<mat-card (click)="onBannerOptionSelected()">
-  <mat-card-title class="banner-radio-button__title">
+<div (click)="onBannerOptionSelected()" class="banner-radio-button__container" [class.selected]="selected">
     <div>
-      {{ title }}
+      <h3>
+        {{ title }}
+      </h3>
+      <div>
+        {{ subtitle }}
+      </div>
     </div>
+
     <mat-radio-button [value]="value" (click)="onBannerOptionSelected()" [checked]="selected" [disabled]="disabled" />
-  </mat-card-title>
-  <mat-card-content>
-    {{ subtitle }}
-  </mat-card-content>
-</mat-card>
+
+</div>

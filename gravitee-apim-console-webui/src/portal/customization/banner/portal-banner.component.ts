@@ -33,6 +33,7 @@ import {PortalSettingsService} from "../../../services-ngx/portal-settings.servi
 import {PortalSettings} from "../../../entities/portal/portalSettings";
 import {SnackBarService} from "../../../services-ngx/snack-bar.service";
 import {BannerRadioButtonComponent} from "../../components/banner-radio-button/banner-radio-button.component";
+import {PortalHeaderComponent} from "../../components/header/portal-header.component";
 
 interface BannerForm {
   enabled: FormControl<boolean>;
@@ -61,6 +62,7 @@ interface BannerForm {
     MatSlideToggle,
     NgOptimizedImage,
     BannerRadioButtonComponent,
+    PortalHeaderComponent,
   ],
   standalone: true,
 })
@@ -68,6 +70,7 @@ export class PortalBannerComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   settings: PortalSettings;
   form: FormGroup<BannerForm>;
+  formInitialValues;
 
   constructor(
     private readonly portalSettingsService: PortalSettingsService,
@@ -94,6 +97,7 @@ export class PortalBannerComponent implements OnInit {
       titleText: new FormControl<string>(this.settings.portalNext.bannerConfigTitle, [Validators.required]),
       subTitleText: new FormControl<string>(this.settings.portalNext.bannerConfigSubtitle, [Validators.required]),
     });
+    this.formInitialValues = this.form.getRawValue();
   }
 
   reset() {
@@ -124,11 +128,4 @@ export class PortalBannerComponent implements OnInit {
       )
       .subscribe(() => this.ngOnInit());
   }
-
-  onBannerTypeChange(value: boolean) {
-    console.log(this.form)
-    console.log(this.form.controls.enabled)
-    this.form.controls.enabled.setValue(value);
-  }
-
 }
