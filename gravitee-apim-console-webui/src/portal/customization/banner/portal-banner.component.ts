@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
-import {ReactiveFormsModule, Validators, FormControl, FormGroup, FormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {GioFormSlideToggleModule, GioSaveBarModule} from '@gravitee/ui-particles-angular';
-import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
-import {combineLatest, EMPTY, of} from 'rxjs';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule, Validators, FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { GioFormSlideToggleModule, GioSaveBarModule } from '@gravitee/ui-particles-angular';
+import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
+import { EMPTY } from 'rxjs';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatSelect } from '@angular/material/select';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { catchError, tap } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import {GioRoleModule} from '../../../shared/components/gio-role/gio-role.module';
-import {MatOption} from "@angular/material/autocomplete";
-import {MatSelect} from "@angular/material/select";
-import {MatSlideToggle} from "@angular/material/slide-toggle";
-import {catchError, tap} from "rxjs/operators";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {PortalSettingsService} from "../../../services-ngx/portal-settings.service";
-import {PortalSettings} from "../../../entities/portal/portalSettings";
-import {SnackBarService} from "../../../services-ngx/snack-bar.service";
-import {BannerRadioButtonComponent} from "../../components/banner-radio-button/banner-radio-button.component";
-import {PortalHeaderComponent} from "../../components/header/portal-header.component";
+import { GioRoleModule } from '../../../shared/components/gio-role/gio-role.module';
+import { PortalSettingsService } from '../../../services-ngx/portal-settings.service';
+import { PortalSettings } from '../../../entities/portal/portalSettings';
+import { SnackBarService } from '../../../services-ngx/snack-bar.service';
+import { BannerRadioButtonComponent } from '../../components/banner-radio-button/banner-radio-button.component';
+import { PortalHeaderComponent } from '../../components/header/portal-header.component';
 
 interface BannerForm {
   enabled: FormControl<boolean>;
@@ -75,11 +75,11 @@ export class PortalBannerComponent implements OnInit {
   constructor(
     private readonly portalSettingsService: PortalSettingsService,
     private readonly snackBarService: SnackBarService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.portalSettingsService.get()
+    this.portalSettingsService
+      .get()
       .pipe(
         tap((portalSettings) => {
           this.settings = portalSettings;
@@ -93,9 +93,9 @@ export class PortalBannerComponent implements OnInit {
 
   private initialize() {
     this.form = new FormGroup<BannerForm>({
-      enabled: new FormControl<boolean>(this.settings.portalNext.bannerConfigEnabled ?? false, [Validators.required]),
-      titleText: new FormControl<string>(this.settings.portalNext.bannerConfigTitle, [Validators.required]),
-      subTitleText: new FormControl<string>(this.settings.portalNext.bannerConfigSubtitle, [Validators.required]),
+      enabled: new FormControl<boolean>(this.settings.portalNext.banner?.enabled ?? false, [Validators.required]),
+      titleText: new FormControl<string>(this.settings.portalNext.banner?.title, [Validators.required]),
+      subTitleText: new FormControl<string>(this.settings.portalNext.banner?.subtitle, [Validators.required]),
     });
     this.formInitialValues = this.form.getRawValue();
   }
@@ -106,14 +106,16 @@ export class PortalBannerComponent implements OnInit {
   }
 
   submit() {
-    const updatedSettingsPayload = {
+    const updatedSettingsPayload: PortalSettings = {
       ...this.settings,
       portalNext: {
         ...this.settings.portalNext,
-        bannerConfigEnabled: this.form.controls.enabled.value,
-        bannerConfigTitle: this.form.controls.titleText.value,
-        bannerConfigSubtitle: this.form.controls.subTitleText.value,
-      }
+        banner: {
+          enabled: this.form.controls.enabled.value,
+          title: this.form.controls.titleText.value,
+          subtitle: this.form.controls.subTitleText.value,
+        },
+      },
     };
 
     this.portalSettingsService

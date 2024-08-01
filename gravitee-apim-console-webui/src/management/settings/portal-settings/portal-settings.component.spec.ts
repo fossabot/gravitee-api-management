@@ -249,7 +249,9 @@ describe('PortalSettingsComponent', () => {
       init();
     });
     it('should show portal next settings if settings have "access.enabled = true"', async () => {
-      portalSettingsMock = fakePortalSettings({ portalNext: { access: { enabled: true }, bannerConfigEnabled: false, bannerConfigTitle: "", bannerConfigSubtitle: ""  } });
+      portalSettingsMock = fakePortalSettings({
+        portalNext: { access: { enabled: true }, bannerConfigEnabled: false, bannerConfigTitle: '', bannerConfigSubtitle: '' },
+      });
       expectPortalSettingsGetRequest(portalSettingsMock);
       const saveBar = await loader.getHarness(GioSaveBarHarness);
       expect(await saveBar.isVisible()).toBe(false);
@@ -259,7 +261,9 @@ describe('PortalSettingsComponent', () => {
     });
 
     it('should not show portal next settings if settings does not include: "access.enabled"', async () => {
-      portalSettingsMock = fakePortalSettings({ portalNext: { access: { enabled: true }, bannerConfigEnabled: false, bannerConfigTitle: "", bannerConfigSubtitle: ""  } });
+      portalSettingsMock = fakePortalSettings({
+        portalNext: { access: { enabled: true }, bannerConfigEnabled: false, bannerConfigTitle: '', bannerConfigSubtitle: '' },
+      });
       expectPortalSettingsGetRequest(portalSettingsMock);
 
       const saveBar = await loader.getHarness(GioSaveBarHarness);
@@ -280,7 +284,9 @@ describe('PortalSettingsComponent', () => {
     });
 
     it('should not show portal next settings if license is oss', async () => {
-      portalSettingsMock = fakePortalSettings({ portalNext: { access: { enabled: true }, bannerConfigEnabled: false, bannerConfigTitle: "", bannerConfigSubtitle: ""  } });
+      portalSettingsMock = fakePortalSettings({
+        portalNext: { access: { enabled: true }, bannerConfigEnabled: false, bannerConfigTitle: '', bannerConfigSubtitle: '' },
+      });
       expectPortalSettingsGetRequest(portalSettingsMock);
       const saveBar = await loader.getHarness(GioSaveBarHarness);
       expect(await saveBar.isVisible()).toBe(false);

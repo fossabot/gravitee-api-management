@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {ComponentHarness, ComponentHarnessConstructor, HarnessPredicate} from '@angular/cdk/testing';
-import { MatInputHarness } from '@angular/material/input/testing';
-import {MatRadioButtonHarness, MatRadioGroupHarness, RadioButtonHarnessFilters} from '@angular/material/radio/testing';
-import { GioSaveBarHarness } from '@gravitee/ui-particles-angular';
+import { ComponentHarness, ComponentHarnessConstructor, HarnessPredicate } from '@angular/cdk/testing';
+import { MatRadioButtonHarness, RadioButtonHarnessFilters } from '@angular/material/radio/testing';
 interface BannerRadioButtonHarnessFilters extends RadioButtonHarnessFilters {
   title?: string;
 }
@@ -24,7 +22,7 @@ export class BannerRadioButtonHarness extends ComponentHarness {
   static readonly hostSelector = 'banner-radio-button';
 
   private locateRadioButton = this.locatorFor(MatRadioButtonHarness);
-  private locateTitle = this.locatorFor('h3')
+  private locateTitle = this.locatorFor('h3');
 
   static with<T extends BannerRadioButtonHarness>(
     this: ComponentHarnessConstructor<T>,
@@ -36,7 +34,7 @@ export class BannerRadioButtonHarness extends ComponentHarness {
   }
 
   public async getTitle(): Promise<string> {
-    return await this.locateTitle().then(el => el.text());
+    return await this.locateTitle().then((el) => el.text());
   }
 
   public async getRadioButton(): Promise<MatRadioButtonHarness> {

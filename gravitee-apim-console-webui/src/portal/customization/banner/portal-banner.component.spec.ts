@@ -13,20 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpTestingController} from '@angular/common/http/testing';
-import {MatButtonHarness} from "@angular/material/button/testing";
-import {HarnessLoader} from "@angular/cdk/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpTestingController } from '@angular/common/http/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { GioSaveBarHarness } from '@gravitee/ui-particles-angular';
 
-import {PortalBannerComponent} from './portal-banner.component';
-import {PortalBannerHarness} from './portal-banner.harness';
-import {PortalSettingsService} from "../../../services-ngx/portal-settings.service";
-import {fakePortalSettings} from "../../../entities/portal/portalSettings.fixture";
-import {CONSTANTS_TESTING, GioTestingModule} from "../../../shared/testing";
-import {GioSaveBarHarness} from "@gravitee/ui-particles-angular";
-import { of } from 'rxjs';
+import { PortalBannerComponent } from './portal-banner.component';
+import { PortalBannerHarness } from './portal-banner.harness';
+
+import { fakePortalSettings } from '../../../entities/portal/portalSettings.fixture';
+import { CONSTANTS_TESTING, GioTestingModule } from '../../../shared/testing';
 
 describe('DeveloperPortalBannerComponent', () => {
   let fixture: ComponentFixture<PortalBannerComponent>;
@@ -59,7 +57,7 @@ describe('DeveloperPortalBannerComponent', () => {
       url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
     });
 
-    requests.flush(PORTAL_SETTINGS)
+    requests.flush(PORTAL_SETTINGS);
     fixture.detectChanges();
   };
 
@@ -82,19 +80,24 @@ describe('DeveloperPortalBannerComponent', () => {
       ...PORTAL_SETTINGS,
       portalNext: {
         ...PORTAL_SETTINGS.portalNext,
-        bannerConfigEnabled: false,
+        banner: {
+          ...PORTAL_SETTINGS.portalNext.banner,
+          enabled: false,
+        },
       },
     });
-    httpTestingController.expectOne({method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal`}).flush({});
-    httpTestingController.expectOne({
-      method: 'GET',
-      url: `${CONSTANTS_TESTING.env.baseURL}/settings`
-    }).flush(PORTAL_SETTINGS);
+    httpTestingController.expectOne({ method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal` }).flush({});
+    httpTestingController
+      .expectOne({
+        method: 'GET',
+        url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
+      })
+      .flush(PORTAL_SETTINGS);
   });
 
   it('should render Featured banner radio button selected and render featured banner elements', async () => {
-    let testTitle = 'Test Title';
-    let testSubtitle = 'Test Subtitle';
+    const testTitle = 'Test Title';
+    const testSubtitle = 'Test Subtitle';
 
     getSettings();
     await componentHarness.enableBanner();
@@ -123,16 +126,19 @@ describe('DeveloperPortalBannerComponent', () => {
       ...PORTAL_SETTINGS,
       portalNext: {
         ...PORTAL_SETTINGS.portalNext,
-        bannerConfigEnabled: true,
-        bannerConfigTitle: testTitle,
-        bannerConfigSubtitle: testSubtitle,
+        banner: {
+          enabled: true,
+          title: testTitle,
+          subtitle: testSubtitle,
+        },
       },
     });
-    httpTestingController.expectOne({method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal`}).flush({});
-    httpTestingController.expectOne({
-      method: 'GET',
-      url: `${CONSTANTS_TESTING.env.baseURL}/settings`
-    }).flush(PORTAL_SETTINGS);
+    httpTestingController.expectOne({ method: 'GET', url: `${CONSTANTS_TESTING.env.baseURL}/portal` }).flush({});
+    httpTestingController
+      .expectOne({
+        method: 'GET',
+        url: `${CONSTANTS_TESTING.env.baseURL}/settings`,
+      })
+      .flush(PORTAL_SETTINGS);
   });
 });
-
