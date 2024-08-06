@@ -31,6 +31,14 @@
         </mat-select>
       </mat-form-field>
     }
+    <mat-form-field>
+      <mat-label i18n="@@applicationLogsApis">HTTP Methods</mat-label>
+      <mat-select (selectionChange)="selectHttpMethods($event)" multiple [value]="filters().methods" aria-label="Filter by API">
+        @for (method of httpMethods; track method) {
+          <mat-option [value]="method">{{ method.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
     <button mat-flat-button color="primary" (click)="search()" [disabled]="filtersPristine" aria-label="Apply filters">
       <mat-icon>search</mat-icon><span i18n="@@applicatonLogsSearch">Search</span>
     </button>
